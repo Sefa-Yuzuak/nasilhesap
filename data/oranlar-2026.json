@@ -79,5 +79,8 @@
     "kaynak": {"ad": "BDDK 26.09.2024 tarihli karar (asgari ödeme, limit kademesi); TCMB kredi kartı azami faiz oranları (Ocak 2026, borç kademeli); BSMV %15 + KKDF %15", "url": "https://www.tcmb.gov.tr/"}
   },
 
+  "deger_artis": {"istisna": 150000, "sure_yil": 5, "endeks_esik": 0.10,
+                  "kaynak": {"ad": "GVK mükerrer m.80 ve m.81; 2026 istisna tutarı — Gelir Vergisi Genel Tebliği Seri No 332 (RG 33124, 5. Mük.)", "url": "https://www.gib.gov.tr/"}},
+
   "kira_geliri_istisna": {"tutar": 58000, "kaynak": {"ad": "GVK m.21 – 2026 konut kira geliri istisnası (RG 33124, 5. Mük.)", "url": "https://www.gib.gov.tr/"}}
 }
