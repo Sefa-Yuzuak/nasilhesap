@@ -43,9 +43,11 @@ function hesapla(g){
     sonuc = g.hedef === 'c' ? c : g.hedef === 'f' ? c * 1.8 + 32 : c + 273.15;
   } else sonuc = g.deger * B[k1][g.kaynak] / B[k1][g.hedef];
   var ters = k1 === 'sicaklik' ? null : 1 * B[k1][g.hedef] / B[k1][g.kaynak];
+  var AD = {mm:'mm', cm:'cm', m:'m', km:'km', inc:'inç', fit:'fit', yarda:'yarda', mil:'mil', dmil:'deniz mili', mg:'mg', g:'g', kg:'kg', ton:'ton', ons:'ons', libre:'libre', ml:'ml', l:'litre', m3:'m³', galon:'galon', bardak:'su bardağı', ck:'çay kaşığı', yk:'yemek kaşığı', cm2:'cm²', m2:'m²', donum:'dönüm', hektar:'hektar', km2:'km²', fit2:'fit²', akre:'akre', ms:'m/s', kmh:'km/sa', mph:'mil/sa', knot:'knot', c:'°C', f:'°F', k:'K'};
+  var a1 = AD[g.kaynak] || g.kaynak, a2 = AD[g.hedef] || g.hedef;
   var fmt = function(x){ return Math.abs(x) >= 1e6 || (Math.abs(x) < 0.001 && x !== 0) ? x.toExponential(4) : String(Math.round(x * 1e6) / 1e6).replace('.', ','); };
-  var s = [{etiket: g.deger + ' ' + g.kaynak + ' =', deger: fmt(sonuc) + ' ' + g.hedef, vurgu: true}];
-  if (ters !== null) { s.push({etiket: '1 ' + g.kaynak + ' =', deger: fmt(B[k1][g.kaynak] / B[k1][g.hedef]) + ' ' + g.hedef}); s.push({etiket: '1 ' + g.hedef + ' =', deger: fmt(ters) + ' ' + g.kaynak}); }
+  var s = [{etiket: String(g.deger).replace('.', ',') + ' ' + a1 + ' =', deger: fmt(sonuc) + ' ' + a2, vurgu: true}];
+  if (ters !== null) { s.push({etiket: '1 ' + a1 + ' =', deger: fmt(B[k1][g.kaynak] / B[k1][g.hedef]) + ' ' + a2}); s.push({etiket: '1 ' + a2 + ' =', deger: fmt(ters) + ' ' + a1}); }
   return {sonuclar: s, notlar: k1 === 'alan' ? ['Türkiye\'de dönüm = dekar = 1.000 m² olarak kullanılır (eski dönüm bölgeye göre 919-2.500 m² arasında değişirdi).'] : k1 === 'hacim' ? ['Su bardağı 200 ml, çay kaşığı 5 ml, yemek kaşığı 15 ml kabul edilmiştir.'] : []};
 }
 """,

@@ -66,5 +66,18 @@
     "kaynak": {"ad": "1319 sayılı Emlak Vergisi Kanunu m.8 ve m.18; TÜRMOB 2026 uygulama özeti", "url": "https://www.turmob.org.tr/"}
   },
 
+  "mevduat_stopaj": {
+    "tl": [[6, 0.175], [12, 0.15], [null, 0.10]],
+    "aciklama": "TL mevduat/katılım: vadesiz ve 6 aya kadar %17,5 · 1 yıla kadar %15 · 1 yıldan uzun %10 (31.12.2026'ya kadar)",
+    "kaynak": {"ad": "Cumhurbaşkanı Kararı 11444 (RG 20.06.2026, Sayı 33286) — GVK geçici 67. madde stopaj oranları", "url": "https://www.resmigazete.gov.tr/"}
+  },
+
+  "kredi_karti": {
+    "asgari_limit_esik": 50000, "asgari_alt": 0.20, "asgari_ust": 0.40,
+    "akdi": [[30000, 3.25], [180000, 3.75], [null, 4.25]], "gecikme_ek": 0.30, "vergi": 0.30,
+    "donem": "Ocak 2026",
+    "kaynak": {"ad": "BDDK 26.09.2024 tarihli karar (asgari ödeme, limit kademesi); TCMB kredi kartı azami faiz oranları (Ocak 2026, borç kademeli); BSMV %15 + KKDF %15", "url": "https://www.tcmb.gov.tr/"}
+  },
+
   "kira_geliri_istisna": {"tutar": 58000, "kaynak": {"ad": "GVK m.21 – 2026 konut kira geliri istisnası (RG 33124, 5. Mük.)", "url": "https://www.gib.gov.tr/"}}
 }
