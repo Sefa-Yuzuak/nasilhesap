@@ -24,7 +24,9 @@
     "kaynak": {"ad": "SGK – 2026 prim parametreleri", "url": "https://www.sgk.gov.tr/"}
   },
 
-  "damga_vergisi": {"ucret_oran": 0.00759, "kaynak": {"ad": "488 sayılı Damga Vergisi Kanunu (1) sayılı tablo – ücretlerde binde 7,59", "url": "https://www.gib.gov.tr/"}},
+  "damga_vergisi": {"ucret_oran": 0.00759, "sozlesme": 0.00948, "kira": 0.00189, "ihale": 0.00569, "avans": 0.00759,
+                    "azami": 29115961.10, "artis_orani": 18.95,
+                    "kaynak": {"ad": "488 sayılı Damga Vergisi Kanunu (1) sayılı tablo; 2026 azami tutar ve %18,95 artış – Cumhurbaşkanı Kararı (RG Aralık 2025)", "url": "https://www.gib.gov.tr/"}},
 
   "gelir_vergisi": {
     "ucret": [[190000, 0.15], [400000, 0.20], [1500000, 0.27], [5300000, 0.35], [null, 0.40]],
