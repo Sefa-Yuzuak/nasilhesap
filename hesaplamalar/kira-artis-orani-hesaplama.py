@@ -8,6 +8,12 @@ HESAP = {
     "guncelleme": "2026-09-06",
     "aciklama": "Eylül 2026 kira artış oranı %31,79 (TÜFE 12 aylık ortalama). Mevcut kiranıza yasal azami zammı ve yeni kira tutarını anında hesaplayın. Konut ve iş yeri kira artışı, TBK m.344, son ayların oranları.",
     "kisa_cevap": "Yeni kira = mevcut kira × (1 + TÜFE 12 aylık ortalama oranı ÷ 100). Eylül 2026'da yenilenen konut ve çatılı iş yeri sözleşmelerinde uygulanabilecek azami artış oranı %31,79'dur (TÜİK, 3 Eylül 2026). 20.000 ₺ kira en fazla 26.358 ₺ olur.",
+    "senaryolar": [
+        {"ad": "10.000 ₺ kira", "degerler": {"kira": "10000", "oran": "31.79", "tur": "konut"}},
+        {"ad": "20.000 ₺ kira", "degerler": {"kira": "20000", "oran": "31.79", "tur": "konut"}},
+        {"ad": "35.000 ₺ kira", "degerler": {"kira": "35000", "oran": "31.79", "tur": "konut"}},
+        {"ad": "İş yeri 50.000 ₺", "degerler": {"kira": "50000", "oran": "31.79", "tur": "isyeri"}},
+    ],
     "girdiler": [
         {"id": "kira", "etiket": "Mevcut aylık kira", "tip": "sayi", "varsayilan": "20000", "birim": "₺"},
         {"id": "oran", "etiket": "Artış oranı (TÜFE 12 aylık ort.)", "tip": "sayi", "varsayilan": "31.79", "birim": "%", "ipucu": "Eylül 2026 için %31,79"},

@@ -22,9 +22,10 @@ function hesapla(g){
   var rows = [], deger = g.ana, yatirilan = g.ana;
   var aylikOran = Math.pow(1 + r / n, n / 12) - 1; // aylık efektif
   var toplamAy = Math.round(t * 12);
+  var gD = [g.ana], gY = [g.ana], gEt = ['0'];
   for (var ay = 1; ay <= toplamAy; ay++) {
     deger = deger * (1 + aylikOran) + ek; yatirilan += ek;
-    if (ay % 12 === 0 || ay === toplamAy) rows.push([Math.ceil(ay / 12) + '. yıl', yatirilan, deger - yatirilan, deger]);
+    if (ay % 12 === 0 || ay === toplamAy) { rows.push([Math.ceil(ay / 12) + '. yıl', yatirilan, deger - yatirilan, deger]); gD.push(deger); gY.push(yatirilan); gEt.push(Math.ceil(ay / 12) + '. yıl'); }
   }
   var basit = g.ana * (1 + r * t) + ek * toplamAy;
   var efektif = (Math.pow(1 + r / n, n) - 1) * 100;
@@ -37,6 +38,8 @@ function hesapla(g){
       {etiket: 'Basit faizle olurdu', deger: basit, birim: '₺'},
       {etiket: 'Bileşik etkisi (fark)', deger: deger - basit, birim: '₺'}
     ],
+    grafik: {tur: 'cizgi', baslik: 'Bileşik büyüme: toplam değer ve yatırılan anapara', etiketler: gEt,
+             seriler: [{ad: 'Toplam değer', veri: gD}, {ad: 'Yatırılan', veri: gY, renk: '#9ca3af'}]},
     tablo: {basliklar: ['Dönem', 'Yatırılan', 'Birikmiş getiri', 'Toplam'], satirlar: rows},
     notlar: ['Stopaj/vergi, enflasyon ve masraflar dahil değildir; mevduatta net getiri için stopaj oranını düşün.', 'Ek yatırımlar her ay sonunda eklenmiş kabul edilir.']
   };

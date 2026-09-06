@@ -8,6 +8,13 @@ HESAP = {
     "guncelleme": "2026-09-06",
     "aciklama": "2026 brüt net maaş hesaplama: SGK işçi payı (%14), işsizlik sigortası (%1), kümülatif gelir vergisi dilimleri, damga vergisi ve asgari ücret istisnasıyla aylık net maaşı 12 ay için hesaplayın. Netten brüte de çevirir.",
     "kisa_cevap": "Net maaş = brüt − SGK işçi payı (%14) − işsizlik (%1) − gelir vergisi − damga vergisi (‰7,59). Gelir vergisi kümülatif matraha göre %15'ten başlar ve yıl içinde dilim atladıkça artar; asgari ücrete (2026'da 33.030 ₺ brüt) denk gelen kısım vergiden istisnadır. 50.000 ₺ brüt maaş 2026 Ocak'ta yaklaşık 40.940 ₺ net eder.",
+    "senaryolar": [
+        {"ad": "Asgari ücret", "degerler": {"mod": "brutten", "tutar": "33030", "ay": "1"}},
+        {"ad": "50.000 ₺ brüt", "degerler": {"mod": "brutten", "tutar": "50000", "ay": "1"}},
+        {"ad": "75.000 ₺ brüt", "degerler": {"mod": "brutten", "tutar": "75000", "ay": "1"}},
+        {"ad": "100.000 ₺ brüt", "degerler": {"mod": "brutten", "tutar": "100000", "ay": "1"}},
+        {"ad": "Net 60.000 ₺ istiyorum", "degerler": {"mod": "netten", "tutar": "60000", "ay": "1"}},
+    ],
     "girdiler": [
         {"id": "mod", "etiket": "Hesaplama yönü", "tip": "secim", "varsayilan": "brutten", "genis": True,
          "secenekler": [["brutten", "Brütten nete"], ["netten", "Netten brüte"]]},
@@ -64,6 +71,8 @@ function hesapla(g, O){
       {etiket: 'Net maaş (' + aylar[ay-1] + ')', deger: r.net, birim: '₺'},
       {etiket: 'İşverene toplam maliyet (teşvik hariç)', deger: isveren, birim: '₺'}
     ],
+    grafik: {tur: 'cizgi', baslik: 'Aylara göre net maaş (kümülatif vergi etkisi)', etiketler: aylar.map(function(a){ return a.slice(0,3); }),
+             seriler: [{ad: 'Net maaş', veri: b.rows.map(function(x){ return x.net; })}, {ad: 'Brüt', veri: b.rows.map(function(){ return brut; }), renk: '#9ca3af'}]},
     tablo: {basliklar: ['Ay', 'Gelir vergisi', 'Damga', 'Net'], satirlar: b.rows.map(function(x){ return [aylar[x.ay-1], x.gv, x.dv, x.net]; })},
     notlar: ['Gelir vergisi matrahı: ' + NH.fmt(b.gvM) + ' ₺/ay (brüt − SGK − işsizlik). Kümülatif matrah dilim atladıkça vergi artar, net düşer.',
              'Asgari ücret istisnası uygulanmıştır (2026 brüt asgari ücret ' + NH.fmt(O.asgari_ucret.brut) + ' ₺). SGK tavanı ' + NH.fmt(O.sgk.tavan) + ' ₺.',

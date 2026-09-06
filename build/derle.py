@@ -49,6 +49,7 @@ def hesaplamalari_yukle():
         if eksik:
             raise SystemExit(f"{p.name}: eksik alanlar {eksik}")
         h.setdefault("h1", h["baslik"])
+        h.setdefault("senaryolar", [])
         h.setdefault("ornekler", [])
         h.setdefault("tablo", None)
         h.setdefault("kaynaklar", [])

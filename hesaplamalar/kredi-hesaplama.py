@@ -8,6 +8,12 @@ HESAP = {
     "guncelleme": "2026-09-06",
     "aciklama": "Kredi hesaplama aracı: kredi tutarı, aylık faiz oranı ve vadeye göre aylık taksit, toplam geri ödeme, toplam faiz ve KKDF-BSMV dahil maliyet. İhtiyaç, taşıt ve konut kredisi için ödeme planı.",
     "kisa_cevap": "Aylık taksit = kredi × r ÷ (1 − (1 + r)^−n); r = aylık faiz (vergiler dahil), n = vade ay. İhtiyaç ve taşıt kredilerinde faize %15 KKDF + %15 BSMV eklenir (etkin faiz = faiz × 1,30); konut kredisi bu vergilerden muaftır. 100.000 ₺, %3,5 aylık, 12 ay ihtiyaç kredisinin taksiti yaklaşık 10.998 ₺, toplam geri ödemesi 131.976 ₺'dir.",
+    "senaryolar": [
+        {"ad": "100.000 ₺ · 12 ay", "degerler": {"tutar": "100000", "faiz": "3.5", "vade": "12", "tur": "ihtiyac"}},
+        {"ad": "250.000 ₺ · 24 ay", "degerler": {"tutar": "250000", "faiz": "3.5", "vade": "24", "tur": "ihtiyac"}},
+        {"ad": "500.000 ₺ · 36 ay", "degerler": {"tutar": "500000", "faiz": "3.4", "vade": "36", "tur": "ihtiyac"}},
+        {"ad": "Taşıt 750.000 ₺ · 48 ay", "degerler": {"tutar": "750000", "faiz": "3.2", "vade": "48", "tur": "tasit"}},
+    ],
     "girdiler": [
         {"id": "tutar", "etiket": "Kredi tutarı", "tip": "sayi", "varsayilan": "100000", "birim": "₺"},
         {"id": "faiz", "etiket": "Aylık faiz oranı", "tip": "sayi", "varsayilan": "3.5", "birim": "%"},
@@ -23,9 +29,10 @@ function hesapla(g){
   var taksit = r === 0 ? g.tutar / n : g.tutar * r / (1 - Math.pow(1 + r, -n));
   var toplam = taksit * n, maliyet = toplam - g.tutar;
   var faizNet = maliyet / (1 + vergi), vergiTop = maliyet - faizNet;
-  var rows = [], kalan = g.tutar;
+  var rows = [], kalan = g.tutar, gAna = [], gFaiz = [], gKalan = [], gEt = [];
   for (var i = 1; i <= n; i++) {
     var f = kalan * r, ana = taksit - f; kalan -= ana;
+    gAna.push(ana); gFaiz.push(f); gKalan.push(Math.max(0, kalan)); gEt.push(i + '. ay');
     if (i <= 12 || i === n) rows.push([i, taksit, ana, f, Math.max(0, kalan)]);
     else if (i === 13) rows.push(['…', '', '', '', '']);
   }
@@ -39,6 +46,8 @@ function hesapla(g){
       {etiket: 'Etkin aylık faiz (vergi dahil)', deger: r * 100, birim: '%'},
       {etiket: 'Yıllık bileşik maliyet oranı', deger: yillik, birim: '%'}
     ],
+    grafik: {tur: 'cizgi', baslik: 'Taksitin dağılımı: anapara artar, faiz azalır', etiketler: gEt,
+             seriler: [{ad: 'Anapara', veri: gAna}, {ad: 'Faiz + vergi', veri: gFaiz, renk: '#dc2626'}, {ad: 'Kalan borç', veri: gKalan, renk: '#9ca3af'}]},
     tablo: {basliklar: ['Ay', 'Taksit', 'Anapara', 'Faiz+vergi', 'Kalan'], satirlar: rows},
     notlar: ['Dosya masrafı, hayat sigortası ve ekspertiz gibi ek ücretler dahil değildir; banka teklifinde "toplam maliyet oranı"nı karşılaştırın.']
   };

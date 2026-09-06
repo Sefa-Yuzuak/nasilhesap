@@ -79,6 +79,24 @@ p{margin:.4em 0 1em}
 .sonuc-hata{color:#b91c1c;font-weight:600}
 .sonuc table{width:100%;font-size:.92rem;margin-top:10px}
 
+/* senaryolar, grafik, eylemler, sonraki adım */
+.senaryolar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 4px}
+.senaryolar button.etiket{cursor:pointer;font:inherit;font-size:.92rem}
+.senaryolar button.etiket.secili{background:var(--vurgu);border-color:var(--vurgu);color:#fff}
+.grafik-kap{margin:14px 0 6px}
+.grafik-kap figcaption{font-size:.9rem;font-weight:600;margin-bottom:4px}
+.grafik{width:100%;height:auto;display:block}
+.grafik .gx{font-size:11px;fill:var(--soluk)}
+.lejant{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--soluk);margin-top:4px}
+.lej i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.sonuc-eylem{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--cizgi)}
+.mini{background:#fff;border:1px solid var(--cizgi);border-radius:8px;padding:6px 12px;font:inherit;font-size:.88rem;cursor:pointer;color:var(--metin)}
+.mini:hover{border-color:var(--vurgu);color:var(--vurgu)}
+.sonraki{margin:22px 0 6px}
+.sonraki-bas{margin:0 0 10px;font-size:1.15rem}
+.son-araclar{margin:14px 0;align-items:center;justify-content:flex-start}
+.etiketler.sol{justify-content:flex-start}
+
 /* içerik */
 .icerik-bolum{background:var(--yuzey);border:1px solid var(--cizgi);border-radius:var(--radius);padding:8px 22px 14px;margin:16px 0}
 .icerik-bolum h2{margin-top:.9em}

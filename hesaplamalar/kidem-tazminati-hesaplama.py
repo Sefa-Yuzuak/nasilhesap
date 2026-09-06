@@ -8,6 +8,12 @@ HESAP = {
     "guncelleme": "2026-09-06",
     "aciklama": "2026 kıdem tazminatı hesaplama: işe giriş-çıkış tarihi ve brüt ücretle kıdem tazminatı, tavan (Ocak-Haziran 64.948,77 ₺ / Temmuz-Aralık 73.729,84 ₺), damga vergisi kesintisi ve ihbar süresi-tazminatı. Formül ve örneklerle.",
     "kisa_cevap": "Kıdem tazminatı = her tam yıl için 30 günlük giydirilmiş brüt ücret (yıldan artan süreler oranlanır). Aylık brüt, tavanı (2026'nın ikinci yarısı için 73.729,84 ₺) aşamaz. Tazminattan yalnızca ‰7,59 damga vergisi kesilir; gelir vergisi ve SGK kesilmez. En az 1 yıl kıdem şarttır.",
+    "senaryolar": [
+        {"ad": "Asgari ücretli · 5 yıl", "degerler": {"brut": "33030", "giris": "2021-09-01", "cikis": "2026-09-01", "ihbar": True}},
+        {"ad": "50.000 ₺ · 3 yıl", "degerler": {"brut": "50000", "giris": "2023-09-01", "cikis": "2026-09-01", "ihbar": True}},
+        {"ad": "60.000 ₺ · 7,5 yıl", "degerler": {"brut": "60000", "giris": "2019-03-01", "cikis": "2026-09-01", "ihbar": True}},
+        {"ad": "Tavan üstü: 100.000 ₺ · 10 yıl", "degerler": {"brut": "100000", "giris": "2016-09-01", "cikis": "2026-09-01", "ihbar": True}},
+    ],
     "girdiler": [
         {"id": "brut", "etiket": "Aylık giydirilmiş brüt ücret", "tip": "sayi", "varsayilan": "60000", "birim": "₺", "ipucu": "yol, yemek gibi düzenli ödemeler dahil"},
         {"id": "giris", "etiket": "İşe giriş tarihi", "tip": "tarih", "varsayilan": "2019-03-01"},

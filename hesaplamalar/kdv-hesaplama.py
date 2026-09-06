@@ -8,6 +8,12 @@ HESAP = {
     "guncelleme": "2026-09-06",
     "aciklama": "KDV hesaplama aracı: KDV hariç tutardan KDV dahil fiyatı, KDV dahil fiyattan KDV hariç tutarı ve KDV tutarını %1, %10, %20 oranlarıyla anında hesaplayın. 2026 güncel KDV oranları ve formüller.",
     "kisa_cevap": "KDV tutarı = tutar × oran ÷ 100. KDV hariç 1.000 ₺'ye %20 KDV eklenince 1.200 ₺ olur; KDV dahil 1.200 ₺'nin KDV hariç değeri 1.200 ÷ 1,20 = 1.000 ₺'dir. Türkiye'de 2026'da geçerli KDV oranları %1, %10 ve %20'dir.",
+    "senaryolar": [
+        {"ad": "1.000 ₺ + %20", "degerler": {"yon": "haric", "tutar": "1000", "oran": "20"}},
+        {"ad": "1.200 ₺ dahil → hariç", "degerler": {"yon": "dahil", "tutar": "1200", "oran": "20"}},
+        {"ad": "Gıda %10", "degerler": {"yon": "haric", "tutar": "1000", "oran": "10"}},
+        {"ad": "Temel gıda %1", "degerler": {"yon": "haric", "tutar": "1000", "oran": "1"}},
+    ],
     "girdiler": [
         {"id": "yon", "etiket": "Ne hesaplanacak?", "tip": "secim", "varsayilan": "haric",
          "secenekler": [["haric", "KDV hariç tutardan → KDV dahil"], ["dahil", "KDV dahil tutardan → KDV hariç"]], "genis": True},

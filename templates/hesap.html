@@ -9,6 +9,15 @@
     <p class="soluk kucuk">Güncel oranlar: {{ oranlar.yil }} · Son güncelleme {{ h.guncelleme }} · Anında hesaplar, veri gönderilmez.</p>
   </header>
 
+  {% if h.senaryolar %}
+  <div class="senaryolar" aria-label="Hazır senaryolar">
+    <span class="soluk kucuk">Hazır örnekler:</span>
+    {% for s in h.senaryolar %}
+    <button type="button" class="etiket" data-senaryo='{{ s.degerler|json }}'>{{ s.ad }}</button>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   <section class="kart hesaplayici" aria-label="Hesaplayıcı">
     <form id="hesap-form" autocomplete="off" onsubmit="return false">
       {% for g in h.girdiler %}
@@ -40,6 +49,19 @@
       <p class="soluk">Değerleri girin, sonuç anında görünür.</p>
     </div>
   </section>
+
+  {% if h.ilgili_hesaplar %}
+  <section class="sonraki" aria-label="Sonraki adım">
+    <h2 class="sonraki-bas">Şimdi bunu da hesapla</h2>
+    <div class="izgara">
+      {% for i in h.ilgili_hesaplar %}
+      <a class="kart arac" href="{{ i.url }}"><span class="ikon">{{ i.kat.ikon }}</span><strong>{{ i.baslik }}</strong><span class="soluk kucuk">{{ i.aciklama[:90] }}…</span></a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <div id="son-araclar" class="son-araclar etiketler" data-slug="{{ h.slug }}" data-baslik="{{ h.baslik }}" hidden></div>
 
   <section class="icerik-bolum">
     <h2>{{ h.baslik }} nasıl yapılır?</h2>
@@ -87,16 +109,12 @@
   </section>
   {% endif %}
 
-  {% if h.ilgili_hesaplar %}
   <section class="icerik-bolum">
-    <h2>İlgili hesaplamalar</h2>
-    <div class="izgara">
-      {% for i in h.ilgili_hesaplar %}
-      <a class="kart arac" href="{{ i.url }}"><span class="ikon">{{ i.kat.ikon }}</span><strong>{{ i.baslik }}</strong><span class="soluk kucuk">{{ i.aciklama[:90] }}…</span></a>
-      {% endfor %}
+    <h2>{{ h.kat.ad }} kategorisindeki diğer hesaplamalar</h2>
+    <div class="etiketler sol">
+      {% for i in h.kat.hesaplar if i.slug != h.slug %}<a class="etiket" href="{{ i.url }}">{{ i.baslik }}</a>{% endfor %}
     </div>
   </section>
-  {% endif %}
 </article>
 
 <script>

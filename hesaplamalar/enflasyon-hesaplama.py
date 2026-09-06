@@ -32,11 +32,15 @@ function hesapla(g){
   if (!(g.tutar > 0) || isNaN(g.enf) || !(g.yil > 0)) return {hata: 'Tutar, enflasyon ve süreyi girin.'};
   var carpan = Math.pow(1 + g.enf / 100, g.yil);
   if (g.mod === 'gelecek') {
+    var gEt = [], gG = [], gA = [];
+    for (var i = 0; i <= Math.min(Math.ceil(g.yil), 30); i++) { var c = Math.pow(1 + g.enf / 100, i); gEt.push(i + '. yıl'); gG.push(g.tutar * c); gA.push(g.tutar / c); }
     s.push({etiket: g.yil + ' yıl sonra aynı alım gücü için gereken', deger: g.tutar * carpan, birim: '₺', vurgu: true});
     s.push({etiket: 'Bugünkü ' + NH.fmt(g.tutar) + ' ₺\'nin ' + g.yil + ' yıl sonraki alım gücü', deger: g.tutar / carpan, birim: '₺'});
     s.push({etiket: 'Alım gücü kaybı', deger: (1 - 1 / carpan) * 100, birim: '%'});
     s.push({etiket: 'Kümülatif enflasyon', deger: (carpan - 1) * 100, birim: '%'});
     s.push({etiket: 'Fiyatların ikiye katlanma süresi', deger: g.enf > 0 ? (Math.log(2) / Math.log(1 + g.enf / 100)).toFixed(1) + ' yıl' : '—'});
+    return {sonuclar: s, notlar: n, grafik: {tur: 'cizgi', baslik: 'Aynı sepetin fiyatı ve paranın alım gücü', etiketler: gEt,
+      seriler: [{ad: 'Gereken tutar', veri: gG, renk: '#dc2626'}, {ad: 'Alım gücü', veri: gA, renk: '#059669'}]}};
   } else {
     if (isNaN(g.faiz)) return {hata: 'Faiz oranını girin.'};
     var reel = ((1 + g.faiz / 100) / (1 + g.enf / 100) - 1) * 100;

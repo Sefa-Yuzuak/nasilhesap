@@ -8,6 +8,12 @@ HESAP = {
     "guncelleme": "2026-09-06",
     "aciklama": "Konut kredisi hesaplama: ev fiyatı, peşinat oranı, aylık faiz ve vadeye göre aylık taksit, toplam geri ödeme, toplam faiz ve tapu harcı dahil ev alma maliyeti. KKDF-BSMV muafiyeti, ödeme planı.",
     "kisa_cevap": "Konut kredisi taksiti = kredi × r ÷ (1 − (1 + r)^−n); konut kredilerinde KKDF ve BSMV alınmadığı için r doğrudan bankanın aylık faizidir. 5.000.000 ₺'lik evde %20 peşinatla 4.000.000 ₺ krediyi %2,5 aylık faiz ve 120 ay vadeyle aylık yaklaşık 105.447 ₺ taksitle ödersiniz; tapu harcı alıcı için ‰20'dir.",
+    "senaryolar": [
+        {"ad": "3 M ₺ ev · %20 peşinat · 120 ay", "degerler": {"fiyat": "3000000", "pesinat": "20", "faiz": "2.5", "vade": "120"}},
+        {"ad": "5 M ₺ ev · %20 peşinat · 120 ay", "degerler": {"fiyat": "5000000", "pesinat": "20", "faiz": "2.5", "vade": "120"}},
+        {"ad": "5 M ₺ ev · %40 peşinat · 60 ay", "degerler": {"fiyat": "5000000", "pesinat": "40", "faiz": "2.5", "vade": "60"}},
+        {"ad": "8 M ₺ ev · %25 peşinat · 180 ay", "degerler": {"fiyat": "8000000", "pesinat": "25", "faiz": "2.5", "vade": "180"}},
+    ],
     "girdiler": [
         {"id": "fiyat", "etiket": "Ev fiyatı", "tip": "sayi", "varsayilan": "5000000", "birim": "₺"},
         {"id": "pesinat", "etiket": "Peşinat oranı", "tip": "sayi", "varsayilan": "20", "birim": "%"},
@@ -23,8 +29,10 @@ function hesapla(g, O){
   var taksit = r === 0 ? kredi / n : kredi * r / (1 - Math.pow(1 + r, -n));
   var toplam = taksit * n, faiz = toplam - kredi;
   var harc = g.fiyat * O.tapu_harci.alici_binde / 1000;
-  var rows = [], kalan = kredi;
-  for (var i = 1; i <= n; i++) { var f = kalan * r, a = taksit - f; kalan -= a; if (i <= 6 || i === n) rows.push([i, taksit, a, f, Math.max(0, kalan)]); else if (i === 7) rows.push(['…','','','','']); }
+  var rows = [], kalan = kredi, gK = [], gO = [], gEt = [], odenen = 0;
+  for (var i = 1; i <= n; i++) { var f = kalan * r, a = taksit - f; kalan -= a; odenen += a;
+    gK.push(Math.max(0, kalan)); gO.push(odenen); gEt.push(i <= 12 ? i + '. ay' : Math.round(i/12) + '. yıl');
+    if (i <= 6 || i === n) rows.push([i, taksit, a, f, Math.max(0, kalan)]); else if (i === 7) rows.push(['…','','','','']); }
   return {
     sonuclar: [
       {etiket: 'Aylık taksit', deger: taksit, birim: '₺', vurgu: true},
@@ -36,6 +44,8 @@ function hesapla(g, O){
       {etiket: 'Evin toplam maliyeti (peşinat + taksitler + harç)', deger: pes + toplam + harc, birim: '₺'},
       {etiket: 'Taksit / kredi oranı (aylık)', deger: taksit / kredi * 100, birim: '%'}
     ],
+    grafik: {tur: 'cizgi', baslik: 'Kalan borç ve ödenen anapara', etiketler: gEt,
+             seriler: [{ad: 'Kalan borç', veri: gK}, {ad: 'Ödenen anapara', veri: gO, renk: '#059669'}]},
     tablo: {basliklar: ['Ay', 'Taksit', 'Anapara', 'Faiz', 'Kalan'], satirlar: rows},
     notlar: ['Konut kredilerinde KKDF ve BSMV alınmaz. Ekspertiz, ipotek tesis ücreti, DASK ve konut sigortası dahil değildir.',
              'Peşinat: BDDK düzenlemelerine göre kredi tutarı, konut değerinin belirli bir oranını (genellikle %75-90, değere göre kademeli) aşamaz; bankanız kesin oranı bildirir.']
