@@ -51,7 +51,7 @@ function hesapla(g){
         "İş günü = aralıktaki Pazartesi–Cuma günleri sayısı",
     ],
     "ornekler": [
-        {"baslik": "1 Ocak 2026 – 6 Eylül 2026", "adimlar": ["Gün farkı: 248 gün", "35 hafta 3 gün · 8 ay 5 gün", "İş günü: 177 (hafta sonu 71)"]},
+        {"baslik": "1 Ocak 2026 – 6 Eylül 2026", "adimlar": ["Gün farkı: 248 gün", "35 hafta 3 gün · 8 ay 5 gün", "İş günü: 176 (hafta sonu 72)"]},
         {"baslik": "Otel: 10–13 Temmuz", "adimlar": ["Gece sayısı = 3 (bitiş hariç)", "Konaklanan gün sayısı = 4 (bitiş dahil)"]},
     ],
     "tablo": None,
