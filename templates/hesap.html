@@ -33,7 +33,8 @@
         <label class="onay"><input type="checkbox" id="g-{{ g.id }}" name="{{ g.id }}" data-tip="onay" {% if g.varsayilan %}checked{% endif %}> {{ g.onay_metin or 'Evet' }}</label>
         {% else %}
         <div class="girdi {% if g.birim %}birimli{% endif %}">
-          <input type="text" inputmode="decimal" id="g-{{ g.id }}" name="{{ g.id }}" data-tip="{{ g.tip }}"
+          <input type="text" inputmode="{% if g.tip == 'tamsayi' %}numeric{% elif g.tip == 'metin' %}text{% else %}decimal{% endif %}"
+                 id="g-{{ g.id }}" name="{{ g.id }}" data-tip="{{ g.tip }}" enterkeyhint="done"
                  value="{{ g.varsayilan if g.varsayilan is not none else '' }}" placeholder="{{ g.placeholder or '0' }}">
           {% if g.birim %}<span class="birim">{{ g.birim }}</span>{% endif %}
         </div>

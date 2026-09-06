@@ -25,7 +25,23 @@ p{margin:.4em 0 1em}
 .ara-sonuc a{display:flex;gap:10px;align-items:center;padding:10px 14px;color:var(--metin);border-bottom:1px solid var(--cizgi)}
 .ara-sonuc a:last-child{border-bottom:0}.ara-sonuc a:hover{background:var(--vurgu-soft);text-decoration:none}
 .ara-sonuc small{color:var(--soluk);margin-left:auto;white-space:nowrap}
-@media(max-width:760px){.menu{display:none}.ara{max-width:none}}
+
+/* mobil menü düğmesi + panel */
+.menu-btn{display:none;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid var(--cizgi);background:#fff;border-radius:12px;cursor:pointer;padding:0}
+.menu-btn span{display:block;width:20px;height:2px;background:var(--metin);position:relative}
+.menu-btn span::before,.menu-btn span::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--metin);transition:transform .18s}
+.menu-btn span::before{top:-6px}.menu-btn span::after{top:6px}
+.menu-btn[aria-expanded="true"] span{background:transparent}
+.menu-btn[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg)}
+@media(max-width:860px){
+  .menu-btn{display:inline-flex;order:3}
+  .ust-ic{gap:10px;min-height:58px}
+  .ara{order:4;flex-basis:100%;max-width:none;margin-left:0}
+  .menu{display:none;order:5;flex-basis:100%;flex-direction:column;gap:2px;padding:6px 0 10px;border-top:1px solid var(--cizgi)}
+  .menu.acik{display:flex}
+  .menu a{padding:13px 12px;border-radius:10px;font-size:1rem;min-height:46px;display:flex;align-items:center}
+}
 
 /* hero */
 .hero{padding:44px 0 20px;text-align:center}
@@ -55,7 +71,11 @@ p{margin:.4em 0 1em}
 .hesap-bas{padding:14px 0 6px}
 .kisa-cevap{background:var(--vurgu-soft);border-left:4px solid var(--vurgu);padding:12px 16px;border-radius:0 10px 10px 0;margin:10px 0}
 .hesaplayici{display:grid;grid-template-columns:1.1fr .9fr;gap:22px;padding:22px;margin:10px 0 26px}
-@media(max-width:800px){.hesaplayici{grid-template-columns:1fr}}
+@media(max-width:800px){
+  .hesaplayici{grid-template-columns:1fr}
+  .hesaplayici .sonuc{order:-1}          /* mobilde sonuç formun üstünde: kaydırmadan görünür */
+  .hesaplayici #hesap-form{order:0}
+}
 #hesap-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-content:start}
 @media(max-width:520px){#hesap-form{grid-template-columns:1fr}}
 .alan{display:flex;flex-direction:column;gap:6px}.alan.genis{grid-column:1/-1}
@@ -116,6 +136,40 @@ th{background:var(--zemin);font-size:.9rem}
 .kaynaklar ul{padding-left:18px}
 .sayfa{max-width:800px;margin:20px auto 40px}
 .sayfa ul{padding-left:20px}
+
+/* mobil: yapışkan sonuç çubuğu */
+.mini-sonuc{position:fixed;left:0;right:0;bottom:0;z-index:80;display:none;align-items:center;gap:12px;
+  background:var(--vurgu);color:#fff;padding:11px 16px calc(11px + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -4px 18px rgba(17,24,39,.18);cursor:pointer;border:0;width:100%;font:inherit;text-align:left}
+.mini-sonuc .me{font-size:.8rem;opacity:.9;display:block;line-height:1.25}
+.mini-sonuc .md{font-size:1.28rem;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.mini-sonuc .mk{margin-left:auto;font-size:.82rem;background:rgba(255,255,255,.2);padding:6px 11px;border-radius:999px;white-space:nowrap}
+@media(max-width:860px){.mini-sonuc.gorunur{display:flex}body.mini-acik{padding-bottom:76px}}
+
+/* mobil ince ayar */
+@media(max-width:640px){
+  .kap{padding:0 14px}
+  .hero{padding:28px 0 14px}
+  .hesaplayici{padding:16px;gap:16px}
+  .icerik-bolum{padding:6px 16px 12px}
+  .kart{padding:15px 16px}
+  h2{font-size:1.22rem}
+  .girdi input,.alan select,.alan input[type=date]{padding:13px 12px;font-size:16px;min-height:48px}
+  .birim{padding:0 13px}
+  .dugme{padding:14px 20px;min-height:48px;flex:1}
+  .dugmeler{gap:8px}
+  .mini{padding:10px 14px;min-height:44px}
+  .etiket{padding:9px 14px;min-height:40px;display:inline-flex;align-items:center}
+  .sonuc{padding:15px}
+  .sonuc-ana .deg{font-size:1.72rem}
+  .sonuc-satir{padding:11px 0}
+  .tablo-kap{-webkit-overflow-scrolling:touch}
+  .tablo-kap table{min-width:460px}
+  th,td{padding:10px 9px;font-size:.92rem}
+  .sss summary{padding:12px 0;min-height:44px}
+  .kirinti{font-size:.85rem}
+  code{word-break:break-word}
+}
 
 /* alt */
 .alt{background:var(--yuzey);border-top:1px solid var(--cizgi);margin-top:40px;padding:28px 0 18px;font-size:.93rem}

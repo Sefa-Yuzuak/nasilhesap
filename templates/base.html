@@ -31,8 +31,9 @@
     <a class="logo" href="/" aria-label="{{ site.ad }} ana sayfa">
       <img src="/static/logo.svg" alt="" width="32" height="32"><span>Nasıl<b>Hesap</b></span>
     </a>
-    <nav class="menu" aria-label="Kategoriler">
-      {% for k in kategoriler %}<a href="{{ k.url }}">{{ k.ad }}</a>{% endfor %}
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="ana-menu" aria-label="Menüyü aç"><span></span></button>
+    <nav class="menu" id="ana-menu" aria-label="Kategoriler">
+      {% for k in kategoriler %}<a href="{{ k.url }}">{{ k.ikon }} {{ k.ad }}</a>{% endfor %}
     </nav>
     <form class="ara" role="search" action="/" method="get">
       <input type="search" name="q" id="q" placeholder="Hesaplama ara… (ör. KDV, kıdem)" aria-label="Hesaplama ara" autocomplete="off">
@@ -62,6 +63,7 @@
     <p class="alt-not">Sonuçlar bilgilendirme amaçlıdır; resmî işlemler için ilgili kurum ve mali müşavirinize danışın. © {{ site.yil }} {{ site.ad }}</p>
   </div>
 </footer>
+<button type="button" class="mini-sonuc" id="mini-sonuc" hidden><span><span class="me"></span><span class="md"></span></span><span class="mk">Ayrıntı ↑</span></button>
 <script src="/static/h.js" defer></script>
 </body>
 </html>

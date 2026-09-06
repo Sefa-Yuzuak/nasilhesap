@@ -31,6 +31,24 @@
   }
   window.NH = { parseNum: parseNum, fmt: fmt, TL: TL };
 
+  /* ---------- mobil menü ---------- */
+  var mBtn = document.getElementById('menu-btn'), mMenu = document.getElementById('ana-menu');
+  if (mBtn && mMenu) {
+    mBtn.addEventListener('click', function () {
+      var acik = mMenu.classList.toggle('acik');
+      mBtn.setAttribute('aria-expanded', acik ? 'true' : 'false');
+      mBtn.setAttribute('aria-label', acik ? 'Menüyü kapat' : 'Menüyü aç');
+    });
+    document.addEventListener('click', function (e) {
+      if (mMenu.classList.contains('acik') && !mMenu.contains(e.target) && !mBtn.contains(e.target)) {
+        mMenu.classList.remove('acik'); mBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mMenu.classList.contains('acik')) { mMenu.classList.remove('acik'); mBtn.setAttribute('aria-expanded', 'false'); mBtn.focus(); }
+    });
+  }
+
   /* ---------- son kullanılan araçlar (localStorage) ---------- */
   var SON_ANAHTAR = 'nh_son_araclar';
   function sonOku() { try { return JSON.parse(localStorage.getItem(SON_ANAHTAR) || '[]'); } catch (e) { return []; } }
@@ -129,7 +147,8 @@
     function gizliUygula(g) {
       form.querySelectorAll('[data-gizli]').forEach(function (kutu) {
         var kural = kutu.getAttribute('data-gizli').split('=');
-        kutu.hidden = String(g[kural[0]]) !== kural[1];
+        var kabul = kural[1].split(',');
+        kutu.hidden = kabul.indexOf(String(g[kural[0]])) === -1;
       });
     }
     function ciz(r) {
@@ -156,6 +175,43 @@
       var kb = document.getElementById('kopyala-btn'), pb = document.getElementById('paylas-btn');
       if (kb) kb.addEventListener('click', function () { panoya(metinOzet(r), 'Sonuç kopyalandı'); });
       if (pb) pb.addEventListener('click', function () { panoya(paylasLink(), 'Bağlantı kopyalandı'); });
+      miniGuncelle(r);
+    }
+
+    /* mobil yapışkan sonuç çubuğu */
+    var mini = document.getElementById('mini-sonuc'), miniGorunur = false;
+    function miniGuncelle(r) {
+      if (!mini) return;
+      var ana = (r && !r.hata && (r.sonuclar || []).filter(function (x) { return x.vurgu; })[0]) || null;
+      if (!ana) { mini.hidden = true; mini.classList.remove('gorunur'); document.body.classList.remove('mini-acik'); miniGorunur = false; return; }
+      var d = (typeof ana.deger === 'number') ? fmt(ana.deger, ana.ondalik) : ana.deger;
+      mini.querySelector('.me').textContent = ana.etiket;
+      mini.querySelector('.md').textContent = d + (ana.birim ? ' ' + ana.birim : '');
+      mini.hidden = false;
+      miniKontrol();
+    }
+    function miniKontrol() {
+      if (!mini || mini.hidden) return;
+      var k = document.querySelector('.hesaplayici');
+      if (!k) return;
+      var kutu = k.getBoundingClientRect();
+      var anaKutu = sonuc.querySelector('.sonuc-ana');
+      var sonucGorunur = anaKutu && anaKutu.getBoundingClientRect().bottom > 0 && anaKutu.getBoundingClientRect().top < window.innerHeight;
+      // hesaplayıcı ekranda ama ana sonuç görünmüyorsa (ya da form altında kaldıysa) çubuğu göster
+      var goster = !sonucGorunur && kutu.bottom > 0 && kutu.top < window.innerHeight * 1.6;
+      if (goster !== miniGorunur) {
+        miniGorunur = goster;
+        mini.classList.toggle('gorunur', goster);
+        document.body.classList.toggle('mini-acik', goster);
+      }
+    }
+    if (mini) {
+      mini.addEventListener('click', function () {
+        var a = sonuc.querySelector('.sonuc-ana') || sonuc;
+        a.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      window.addEventListener('scroll', miniKontrol, { passive: true });
+      window.addEventListener('resize', miniKontrol);
     }
     function metinOzet(r) {
       var l = [document.title.split('|')[0].trim()];
