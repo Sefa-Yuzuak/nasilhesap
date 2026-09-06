@@ -73,6 +73,9 @@ function hesapla(g){
         {"soru": "Enflasyon bileşik faizi etkiler mi?", "cevap": "Nominal getiri değişmez ama reel (satın alma gücü) getiri = (1 + faiz) ÷ (1 + enflasyon) − 1'dir; enflasyon faizden yüksekse reel getiri negatiftir."},
         {"soru": "72 kuralı nedir?", "cevap": "Paranın ikiye katlanma süresini hızlıca bulma yöntemi: 72 ÷ yıllık getiri. %18 getiride yaklaşık 4 yıl."},
     ],
-    "kaynaklar": [],
+    "kaynaklar": [
+        {"ad": "TCMB — Faiz oranları ve bileşik getiri kavramları", "url": "https://www.tcmb.gov.tr/"},
+        {"ad": "SPK — Yatırımcı bilgilendirme rehberleri", "url": "https://www.spk.gov.tr/"},
+    ],
     "ilgili": ["kredi-hesaplama", "yuzde-hesaplama", "kira-artis-orani-hesaplama"],
 }

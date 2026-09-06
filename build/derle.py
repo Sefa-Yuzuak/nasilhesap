@@ -28,6 +28,20 @@ DATA = KOK / "data"
 HESAP_DIR = KOK / "hesaplamalar"
 
 ZORUNLU = ("slug", "baslik", "kategori", "aciklama", "kisa_cevap", "girdiler", "js", "nasil", "formul", "sss")
+YIL = 2026
+
+
+def kisalt(metin: str, en: int = 158) -> str:
+    """Meta description için kelime sınırında kısaltma (SERP'te kesilmesin)."""
+    metin = " ".join(str(metin).split())
+    if len(metin) <= en:
+        return metin
+    kes = metin[:en]
+    for ayrac in (". ", "; ", ", ", " "):
+        i = kes.rfind(ayrac)
+        if i > en * 0.6:
+            return kes[:i].rstrip(" ,;") + ("." if ayrac == ". " else "…")
+    return kes.rstrip() + "…"
 
 
 def yukle_json(ad):
@@ -49,6 +63,7 @@ def hesaplamalari_yukle():
         if eksik:
             raise SystemExit(f"{p.name}: eksik alanlar {eksik}")
         h.setdefault("h1", h["baslik"])
+        h.setdefault("seo_baslik", f"{h['baslik']} {YIL}")
         h.setdefault("senaryolar", [])
         h.setdefault("ornekler", [])
         h.setdefault("tablo", None)
@@ -83,6 +98,26 @@ def app_schema(site, h, kat):
             "offers": {"@type": "Offer", "price": "0", "priceCurrency": "TRY"},
             "publisher": {"@type": "Organization", "name": site["ad"], "url": site["url"] + "/"},
             "dateModified": h["guncelleme"]}
+
+
+def nasil_schema(site, h):
+    """HowTo: 'nasıl hesaplanır' adımları + formüller. AI motorları için alıntılanabilir yapı."""
+    adimlar = []
+    for i, f in enumerate(h["formul"], 1):
+        adimlar.append({"@type": "HowToStep", "position": i, "name": f"Adım {i}",
+                        "text": f, "url": f"{site['url']}{h['url']}#formul"})
+    s = {"@context": "https://schema.org", "@type": "HowTo",
+         "name": f"{h['baslik']} nasıl yapılır?",
+         "description": h["kisa_cevap"],
+         "inLanguage": "tr-TR",
+         "totalTime": "PT1M",
+         "tool": [{"@type": "HowToTool", "name": h["h1"]}],
+         "step": adimlar,
+         "dateModified": h["guncelleme"]}
+    kayn = [k["ad"] for k in h.get("kaynaklar", [])]
+    if kayn:
+        s["citation"] = kayn
+    return s
 
 
 def liste_schema(site, ad, url, hesaplar):
@@ -140,24 +175,33 @@ def main():
                                    "query-input": "required name=search_term_string"}}
     org = {"@context": "https://schema.org", "@type": "Organization", "name": site["ad"], "url": site["url"] + "/",
            "logo": site["url"] + "/static/logo.svg"}
-    sayfa("/", "index.html", baslik=f"{site['ad']} — {site['slogan']}", meta_desc=site["aciklama"],
+    sayfa("/", "index.html", baslik=f"{site['ad']} — {site['slogan']}", meta_desc=kisalt(site["aciklama"]),
           hesaplar=hesaplar, populer=populer, schema=[website, org], oncelik="1.0")
 
     for k in kategoriler:
-        sayfa(k["url"], "kategori.html", baslik=f"{k['ad']} Hesaplamaları 2026 | {site['ad']}",
-              meta_desc=f"{k['ad']} hesaplamaları: {k['aciklama']} {site['yil']} güncel oranlarla, anında ve ücretsiz.",
-              kat=k, schema=[liste_schema(site, k["ad"], k["url"], k["hesaplar"]), kirintilar(site, (k["ad"], k["url"]))],
-              oncelik="0.8")
+        k_sema = [liste_schema(site, k["ad"], k["url"], k["hesaplar"]), kirintilar(site, (k["ad"], k["url"]))]
+        if k.get("sss"):
+            k_sema.append(sss_schema(k["sss"]))
+        sayfa(k["url"], "kategori.html", baslik=f"{k['ad']} Hesaplamaları {YIL} | {site['ad']}",
+              meta_desc=kisalt(f"{k['ad']} hesaplamaları: {k['aciklama']} {len(k['hesaplar'])} ücretsiz araç, {site['yil']} resmî oranlarla."),
+              kat=k, schema=k_sema, oncelik="0.8")
 
     for h in hesaplar:
-        sayfa(h["url"], "hesap.html", baslik=f"{h['h1']} | {site['ad']}", meta_desc=h["aciklama"], h=h,
-              schema=[app_schema(site, h, h["kat"]), sss_schema(h["sss"]),
+        sayfa(h["url"], "hesap.html", baslik=f"{h['seo_baslik']} | {site['ad']}", meta_desc=kisalt(h["aciklama"]), h=h,
+              schema=[app_schema(site, h, h["kat"]), sss_schema(h["sss"]), nasil_schema(site, h),
                       kirintilar(site, (h["kat"]["ad"], h["kat"]["url"]), (h["baslik"], h["url"]))],
               lastmod=h["guncelleme"] if len(h["guncelleme"]) == 10 else oranlar["guncelleme"], oncelik="0.9")
 
-    for slug, baslik, sablon in (("hakkinda", "Hakkında", "hakkinda.html"), ("gizlilik", "Gizlilik ve Çerez Politikası", "gizlilik.html"),
-                                 ("kaynaklar", "Veri Kaynakları ve Güncelleme", "kaynaklar.html")):
-        sayfa(f"/{slug}/", sablon, baslik=f"{baslik} | {site['ad']}", meta_desc=f"{site['ad']} — {baslik.lower()}.",
+    statik = (
+        ("hakkinda", "Hakkında", "hakkinda.html",
+         f"{site['ad']} nasıl çalışır, hangi ilkelerle hazırlanır? Resmî kaynak kullanımı, şeffaf formüller, gizlilik ve sorumluluk sınırları hakkında bilgi."),
+        ("gizlilik", "Gizlilik ve Çerez Politikası", "gizlilik.html",
+         f"{site['ad']} gizlilik politikası: hesaplamalar tarayıcınızda çalışır, girdiğiniz değerler sunucuya gönderilmez. KVKK uyumu, çerezler ve dış bağlantılar."),
+        ("kaynaklar", "Veri Kaynakları ve Güncelleme", "kaynaklar.html",
+         f"{site['ad']} sitesinde kullanılan {site['yil']} oranlarının resmî kaynakları: GİB, SGK, TÜİK, TKGM, Resmî Gazete. Güncelleme tarihi ve hata bildirimi."),
+    )
+    for slug, baslik, sablon, mdesc in statik:
+        sayfa(f"/{slug}/", sablon, baslik=f"{baslik} | {site['ad']}", meta_desc=kisalt(mdesc),
               hesaplar=hesaplar, schema=[kirintilar(site, (baslik, f"/{slug}/"))], oncelik="0.3")
 
     (DIST / "404.html").write_text(env.get_template("404.html").render(site=site, kategoriler=kategoriler, oranlar=oranlar,

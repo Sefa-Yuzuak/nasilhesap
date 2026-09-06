@@ -62,6 +62,9 @@ function hesapla(g){
         {"soru": "Bugüne kaç gün kaldı nasıl bulunur?", "cevap": "Başlangıç olarak bugünü, bitiş olarak hedef tarihi seçin; sonuç geri sayım gün sayısıdır."},
         {"soru": "Hafta sonu dahil mi?", "cevap": "Toplam gün sayısı hafta sonlarını içerir; 'iş günü' satırı hafta sonlarını hariç tutar."},
     ],
-    "kaynaklar": [],
+    "kaynaklar": [
+        {"ad": "2429 sayılı Ulusal Bayram ve Genel Tatiller Hakkında Kanun (iş günü hesabı)", "url": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=2429&MevzuatTur=1&MevzuatTertip=5"},
+        {"ad": "4857 sayılı İş Kanunu m.46-47 (hafta tatili ve genel tatil)", "url": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4857&MevzuatTur=1&MevzuatTertip=5"},
+    ],
     "ilgili": ["yas-hesaplama", "kidem-tazminati-hesaplama"],
 }

@@ -69,6 +69,8 @@ function hesapla(g){
         {"soru": "%20 zam sonra %20 indirim başa döndürür mü?", "cevap": "Hayır. 100 → %20 zam → 120 → %20 indirim → 96. Çünkü indirim daha büyük bir tabana uygulanır; bu yüzden ardışık yüzdeler toplanmaz, çarpılır."},
         {"soru": "Yüzde puanı ile yüzde farkı nedir?", "cevap": "Oranlar arasındaki mutlak fark 'puan'dır: %10'dan %15'e çıkış 5 puan artıştır ama yüzde olarak %50 artıştır."},
     ],
-    "kaynaklar": [],
+    "kaynaklar": [
+        {"ad": "TÜİK — İstatistiksel kavramlar ve değişim oranı tanımları", "url": "https://data.tuik.gov.tr/"},
+    ],
     "ilgili": ["kdv-hesaplama", "indirim-hesaplama", "kira-artis-orani-hesaplama"],
 }

@@ -2,13 +2,37 @@
 {% block icerik %}
 <nav class="kirinti" aria-label="Konum"><a href="/">Ana sayfa</a> › <span>{{ kat.ad }}</span></nav>
 <header class="sayfa-bas">
-  <h1>{{ kat.ikon }} {{ kat.ad }} Hesaplamaları</h1>
-  <p class="buyuk">{{ kat.aciklama }} {{ oranlar.yil }} güncel oranlarla.</p>
+  <h1>{{ kat.ikon }} {{ kat.ad }} Hesaplamaları {{ oranlar.yil }}</h1>
+  <p class="buyuk">{{ kat.aciklama }} {{ kat.hesaplar|length }} ücretsiz araç, {{ oranlar.yil }} resmî oranlarıyla.</p>
 </header>
+
 <div class="izgara">
   {% for h in kat.hesaplar %}
-  <a class="kart arac" href="{{ h.url }}"><strong>{{ h.baslik }}</strong><span class="soluk">{{ h.aciklama[:140] }}…</span></a>
+  <a class="kart arac" href="{{ h.url }}"><strong>{{ h.baslik }}</strong><span class="soluk kucuk">{{ h.kisa_cevap[:110] }}…</span></a>
   {% endfor %}
 </div>
 {% if not kat.hesaplar %}<p class="soluk">Bu kategorideki araçlar yakında.</p>{% endif %}
+
+{% if kat.giris %}
+<section class="icerik-bolum">
+  <h2>{{ kat.ad }} hesaplamaları hakkında</h2>
+  {% for p in kat.giris %}<p>{{ p }}</p>{% endfor %}
+</section>
+{% endif %}
+
+{% if kat.sss %}
+<section class="icerik-bolum">
+  <h2>{{ kat.ad }} — sık sorulan sorular</h2>
+  {% for s in kat.sss %}
+  <details class="sss"><summary>{{ s.soru }}</summary><p>{{ s.cevap }}</p></details>
+  {% endfor %}
+</section>
+{% endif %}
+
+<section class="icerik-bolum">
+  <h2>Diğer kategoriler</h2>
+  <div class="etiketler sol">
+    {% for k in kategoriler if k.slug != kat.slug %}<a class="etiket" href="{{ k.url }}">{{ k.ikon }} {{ k.ad }}</a>{% endfor %}
+  </div>
+</section>
 {% endblock %}

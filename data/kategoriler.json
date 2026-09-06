@@ -1,14 +1,79 @@
 [
   {"slug": "vergi-maas", "ad": "Vergi & Maaş", "ikon": "💼",
-   "aciklama": "KDV, brüt-net maaş, kıdem ve ihbar tazminatı, gelir vergisi dilimleri, SGK kesintileri."},
+   "aciklama": "KDV, brüt-net maaş, kıdem ve ihbar tazminatı, gelir vergisi dilimleri, SGK kesintileri.",
+   "giris": [
+     "Vergi ve maaş hesaplamaları, çalışanların ve işverenlerin en sık ihtiyaç duyduğu araçlardır. Bordronuzda görünen SGK işçi payı (%14), işsizlik sigortası (%1), gelir vergisi ve damga vergisi (‰7,59) kesintilerinin nasıl oluştuğunu; kıdem ve ihbar tazminatının hangi tavanlarla sınırlandığını buradaki araçlarla adım adım görebilirsiniz.",
+     "Tüm hesaplamalar 2026 yılı resmî değerleriyle çalışır: brüt asgari ücret 33.030 ₺, net 28.075,50 ₺; gelir vergisi dilimleri 190.000 / 400.000 / 1.500.000 / 5.300.000 ₺ eşikleriyle %15'ten %40'a; SGK prime esas kazanç tavanı 297.270 ₺; kıdem tazminatı tavanı yılın ilk yarısında 64.948,77 ₺, ikinci yarısında 73.729,84 ₺. Her sayfada kullanılan oranın kaynağı ve güncelleme tarihi belirtilir."
+   ],
+   "sss": [
+     {"soru": "Brütten nete maaş nasıl hesaplanır?", "cevap": "Brüt ücretten önce SGK işçi payı (%14) ve işsizlik sigortası (%1) düşülür; kalan tutar gelir vergisi matrahıdır. Bu matrah yıl başından itibaren birikerek (kümülatif) dilimli tarifeyle vergilendirilir, ayrıca ‰7,59 damga vergisi kesilir. Asgari ücrete denk gelen kısım gelir ve damga vergisinden istisnadır."},
+     {"soru": "Net maaşım neden yıl içinde düşüyor?", "cevap": "Gelir vergisi kümülatif matraha göre hesaplanır. Yıl içinde biriken matrah 190.000 ₺'yi aşınca oran %15'ten %20'ye, 400.000 ₺'yi aşınca %27'ye çıkar; brüt aynı kalsa bile net azalır."},
+     {"soru": "2026 asgari ücret ne kadar?", "cevap": "Aylık brüt 33.030 ₺, net 28.075,50 ₺'dir. Asgari ücretten yalnızca %14 SGK ve %1 işsizlik primi kesilir; gelir ve damga vergisi istisna kapsamındadır."},
+     {"soru": "Kıdem tazminatı nasıl hesaplanır?", "cevap": "Her tam çalışma yılı için 30 günlük giydirilmiş brüt ücret ödenir; yıldan artan süreler oranlanır. Hesaba esas ücret kıdem tavanını aşamaz ve tazminattan yalnızca ‰7,59 damga vergisi kesilir."}
+   ]},
+
   {"slug": "kredi-finans", "ad": "Kredi & Finans", "ikon": "🏦",
-   "aciklama": "Kredi taksiti, faiz, mevduat getirisi, kira artış oranı, döviz ve altın."},
+   "aciklama": "Kredi taksiti, faiz, mevduat getirisi, kira artış oranı, döviz ve altın.",
+   "giris": [
+     "Kredi ve finans araçları, bir borcun gerçek maliyetini ya da bir birikimin gerçek getirisini görmenizi sağlar. Bankaların ilan ettiği faiz oranı çoğu zaman ödeyeceğiniz tutarı tam yansıtmaz: ihtiyaç ve taşıt kredilerinde faiz üzerinden %15 KKDF ve %15 BSMV alınır, yani etkin maliyet ilan edilen faizin 1,3 katıdır. Konut kredileri bu iki vergiden muaftır.",
+     "Birikim tarafında ise stopaj belirleyicidir: TL mevduatta vade 6 aya kadarsa %17,5, 1 yıla kadarsa %15, daha uzunsa %10 kesinti yapılır. Enflasyonun üzerinde reel getiri elde edip etmediğinizi ölçmek için nominal faizi değil, (1 + faiz) ÷ (1 + enflasyon) − 1 formülünü kullanmak gerekir. Bu kategorideki araçlar bu hesapları ödeme planı ve grafiklerle birlikte gösterir."
+   ],
+   "sss": [
+     {"soru": "Kredi taksiti nasıl hesaplanır?", "cevap": "Eşit taksitli (anüite) formülle: taksit = kredi × r ÷ (1 − (1+r)^−vade). Buradaki r, vergiler dahil aylık faizdir; ihtiyaç ve taşıt kredisinde ilan edilen faiz 1,30 ile çarpılır."},
+     {"soru": "Kira artış oranı 2026'da yüzde kaç?", "cevap": "Eylül 2026'da yenilenen konut ve çatılı iş yeri sözleşmelerinde azami artış %31,79'dur. Kira artışında yıllık enflasyon değil, TÜİK'in açıkladığı TÜFE 12 aylık ortalama değişim oranı esas alınır."},
+     {"soru": "Mevduat faizinden ne kadar vergi kesilir?", "cevap": "TL mevduatta stopaj vadeye göre değişir: 6 aya kadar %17,5, 1 yıla kadar %15, 1 yıldan uzun vadede %10. Bu kesinti nihai vergidir, ayrıca beyan gerekmez."},
+     {"soru": "Bileşik faiz ile basit faiz farkı nedir?", "cevap": "Basit faiz yalnızca anaparaya işler; bileşik faizde kazanılan faiz anaparaya eklenir ve kendisi de faiz kazanır. Uzun vadede aradaki fark anaparayı aşabilir."}
+   ]},
+
   {"slug": "ev-emlak", "ad": "Ev & Emlak", "ikon": "🏠",
-   "aciklama": "Konut kredisi, tapu harcı, emlak vergisi, kira geliri vergisi, elbirliği (tasarruf finansman) sistemi."},
+   "aciklama": "Konut kredisi, tapu harcı, emlak vergisi, kira geliri vergisi, elbirliği (tasarruf finansman) sistemi.",
+   "giris": [
+     "Ev almak yalnızca satış bedelinden ibaret değildir. Alıcı tapu harcı olarak satış bedelinin binde 20'sini, satıcı da aynı oranı öder; buna döner sermaye ücreti, emlakçı hizmet bedeli (%2 + KDV) ve kredi kullanılıyorsa ekspertiz ile tahsis ücreti eklenir. Toplam ek masraf genellikle satış bedelinin %4,5–6'sına ulaşır.",
+     "Ev sahibi olduktan sonra da hesap sürer: emlak vergisi konutta binde 1 (büyükşehirde binde 2), kira geliri elde ediyorsanız 2026 için 58.000 ₺ istisna sonrası gelir vergisi, evi 5 yıl dolmadan satarsanız değer artış kazancı vergisi gündeme gelir. Bu kategoride ayrıca faizsiz çalışan elbirliği (tasarruf finansman) sistemini banka kredisiyle karşılaştırabilirsiniz."
+   ],
+   "sss": [
+     {"soru": "Tapu harcı ne kadar, kim öder?", "cevap": "Satış bedelinin binde 20'si alıcıdan, binde 20'si satıcıdan olmak üzere toplam %4'tür. Ayrıca yaklaşık 3.400–6.700 ₺ döner sermaye ücreti alınır; uygulamada bunu genellikle alıcı öder."},
+     {"soru": "Ev alırken toplam ne kadar masraf çıkar?", "cevap": "Satış bedelinin yaklaşık %4,5–6'sı: tapu harcı (%2), emlakçı komisyonu (%2 + KDV), döner sermaye ve kredi kullanılıyorsa ekspertiz, tahsis ücreti ile sigortalar."},
+     {"soru": "Evi 5 yıl dolmadan satarsam vergi öder miyim?", "cevap": "Evet. Endekslenmiş alış bedeli ile satış bedeli arasındaki fark, 2026 için 150.000 ₺ istisnayı aşarsa gelir vergisine tabidir. 5 yıl dolduktan sonra yapılan satışta vergi yoktur."},
+     {"soru": "Elbirliği (tasarruf finansman) sistemi nasıl çalışır?", "cevap": "Faiz yoktur; finansman tutarı eşit taksitlere bölünür ve tek maliyet sözleşme başındaki organizasyon ücretidir. Karşılığında evi sıra veya çekilişle belirlenen teslim ayında alırsınız. Bu şirketler BDDK denetimindedir."}
+   ]},
+
   {"slug": "gunluk", "ad": "Günlük", "ikon": "📅",
-   "aciklama": "Yüzde, yaş, iki tarih arası gün, indirim, ortalama, birim çevirme, zekât."},
+   "aciklama": "Yüzde, yaş, iki tarih arası gün, indirim, ortalama, birim çevirme, zekât.",
+   "giris": [
+     "Günlük hayatta en sık ihtiyaç duyulan hesaplar aslında birkaç temel işleme dayanır: yüzde alma, yüzde değişim, ağırlıklı ortalama ve tarih farkı. İndirim, zam, KDV, faiz ve enflasyon hesaplarının tamamı yüzde işleminin türevidir; en yaygın hata ise ardışık yüzdeleri toplamaktır — %30 indirim üstüne %10 indirim %40 değil %37 eder, çünkü ikinci indirim düşmüş fiyata uygulanır.",
+     "Tarih hesaplarında da benzer tuzaklar vardır: 'yaş × 365' yaklaşımı artık yılları saymadığı için her dört yılda bir gün eksik verir, '30 gün = 1 ay' varsayımı takvim aylarıyla uyuşmaz. Bu kategorideki araçlar bu hesapları artık yıllar ve takvim kurallarıyla birlikte doğru yapar."
+   ],
+   "sss": [
+     {"soru": "Bir sayının yüzdesi nasıl hesaplanır?", "cevap": "Sayıyı yüzde değeriyle çarpıp 100'e bölün: 800'ün %25'i = 800 × 25 ÷ 100 = 200. Bir sayıya yüzde eklemek için (1 + yüzde/100) ile çarpmak en pratik yoldur."},
+     {"soru": "%30 + %10 indirim toplam %40 mı?", "cevap": "Hayır, %37'dir. Ardışık indirimler toplanmaz, çarpılır: 0,70 × 0,90 = 0,63, yani toplam indirim %37."},
+     {"soru": "İki tarih arası gün nasıl hesaplanır?", "cevap": "Sonraki tarihten önceki tarih çıkarılır; başlangıç günü sayılmaz. Bitiş gününü de saymak istiyorsanız sonuca 1 eklersiniz. Artık yıllar otomatik hesaba katılır."},
+     {"soru": "Yaşımı nasıl hesaplarım?", "cevap": "Bugünün yılından doğum yılını çıkarın; doğum gününüz o yıl henüz gelmediyse bir eksiltin. Tam yaş için ay ve gün farkı da karşılaştırılır."}
+   ]},
+
   {"slug": "saglik", "ad": "Sağlık", "ikon": "❤️",
-   "aciklama": "Vücut kitle indeksi, günlük kalori, ideal kilo, gebelik ve doğum tarihi."},
+   "aciklama": "Vücut kitle indeksi, günlük kalori, ideal kilo, gebelik ve doğum tarihi.",
+   "giris": [
+     "Sağlık hesaplayıcıları, kendi durumunuzu standart ölçütlerle karşılaştırmanızı sağlayan tarama araçlarıdır. Vücut kitle indeksi (VKİ) kilonun boyun karesine bölünmesiyle bulunur ve Dünya Sağlık Örgütü'nün 18,5–24,9 normal bandına göre yorumlanır; günlük kalori ihtiyacı ise Mifflin-St Jeor denklemiyle hesaplanan bazal metabolizmanın aktivite katsayısıyla çarpılmasıyla elde edilir.",
+     "Bu araçların hiçbiri tanı koymaz. VKİ kas kütlesini ayırt etmez, kalori denklemleri kişiler arasında ±%10-15 sapabilir, gebelik hesabı ise ilk trimester ultrasonuyla düzeltilir. Sonuçları bir başlangıç noktası olarak kullanın; kesin değerlendirme için hekiminize veya diyetisyeninize danışın."
+   ],
+   "sss": [
+     {"soru": "VKİ nasıl hesaplanır ve kaç olmalı?", "cevap": "VKİ = kilo (kg) ÷ boy² (m²). Dünya Sağlık Örgütü'ne göre 18,5 altı zayıf, 18,5–24,9 normal, 25–29,9 fazla kilolu, 30 ve üzeri obezdir."},
+     {"soru": "Günde kaç kalori almalıyım?", "cevap": "Bazal metabolizmanızı (Mifflin-St Jeor) aktivite katsayınızla çarpın. Kilo vermek için bu değerin 250-500 kcal altında kalın; alım uzun süre bazal metabolizmanın altına inmemelidir."},
+     {"soru": "Kaç haftalık hamile olduğumu nasıl hesaplarım?", "cevap": "Gebelik yaşı son adet tarihinin ilk gününden itibaren sayılır. Tahmini doğum tarihi son adet tarihine 280 gün eklenerek bulunur (Naegele kuralı); döngü 28 günden farklıysa fark eklenir."},
+     {"soru": "İdeal kilom kaç olmalı?", "cevap": "Devine formülü tek bir değer verir, ancak daha gerçekçi olan VKİ 18,5–24,9 aralığının boyunuza karşılık gelen kilo bandıdır. 175 cm için bu aralık yaklaşık 57–76 kg'dır."}
+   ]},
+
   {"slug": "sinav-egitim", "ad": "Sınav & Eğitim", "ikon": "🎓",
-   "aciklama": "YKS, LGS, KPSS, DGS puan hesaplama, not ortalaması, vize-final."}
+   "aciklama": "TYT, AYT, LGS, KPSS, DGS net hesaplama, OBP, GANO ve vize-final ortalaması.",
+   "giris": [
+     "Sınav hesaplayıcılarında iki farklı şey birbirine karıştırılır: net ve puan. Net kesin olarak hesaplanabilir — TYT, AYT, KPSS ve DGS'de doğru sayısından yanlışın dörtte biri, LGS'de üçte biri çıkarılır. Puan ise netlerin, o yıl sınava giren tüm adayların ortalaması ve standart sapması kullanılarak standart puana çevrilmesiyle bulunur.",
+     "Bu istatistikler sınavdan sonra ÖSYM ve MEB tarafından açıklandığı için, sınav öncesinde hiçbir araç netten kesin puan hesaplayamaz; 'net-puan' tabloları geçmiş yıllara dayalı tahminlerdir. Bu kategorideki araçlar kesin hesaplanabilenleri (net, OBP, GANO, vize-final ortalaması) birebir doğru verir ve puana dönüşümün nasıl yapıldığını açıkça anlatır."
+   ],
+   "sss": [
+     {"soru": "Kaç yanlış 1 doğruyu götürür?", "cevap": "TYT, AYT, YDT, KPSS ve DGS'de 4 yanlış 1 doğruyu götürür (net = doğru − yanlış/4). LGS'de ise 3 yanlış 1 doğruyu götürür (net = doğru − yanlış/3)."},
+     {"soru": "Kaç net kaç puan yapar?", "cevap": "Kesin bir karşılığı yoktur. Puan, o yılki adayların ortalaması ve standart sapmasına göre hesaplandığı için aynı net farklı yıllarda farklı puan getirir."},
+     {"soru": "OBP nasıl hesaplanır?", "cevap": "Diploma notu 5 ile çarpılır (250–500 aralığı). YKS yerleştirme puanına katkısı OBP × 0,12'dir; önceki yıl bir programa yerleşmiş adaylarda katsayı 0,06'ya düşer."},
+     {"soru": "GANO nasıl hesaplanır?", "cevap": "Her dersin harf notu katsayısı (AA 4,00 … FF 0,00) kredisiyle çarpılır, toplam ağırlıklı puan toplam krediye bölünür. Yüksek kredili dersler ortalamayı daha çok etkiler."}
+   ]}
 ]

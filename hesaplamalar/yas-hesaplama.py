@@ -61,6 +61,9 @@ function hesapla(g){
         {"soru": "Resmî işlemlerde yaş nasıl sayılır?", "cevap": "Nüfus kayıtlarındaki doğum tarihine göre 'yaşın doldurulması' esastır: 18 yaşını doldurmak için 18. doğum günü gelmiş olmalıdır."},
         {"soru": "Ay olarak yaşım kaç?", "cevap": "Yıl × 12 + ay farkı. 2 yıl 5 aylık bir bebek 29 aylıktır; aracımız bunu da gösterir."},
     ],
-    "kaynaklar": [],
+    "kaynaklar": [
+        {"ad": "4721 sayılı Türk Medeni Kanunu m.11 (erginlik: 18 yaşın doldurulması)", "url": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4721&MevzuatTur=1&MevzuatTertip=5"},
+        {"ad": "Nüfus Hizmetleri Kanunu ve e-Devlet nüfus kayıt bilgileri", "url": "https://www.nvi.gov.tr/"},
+    ],
     "ilgili": ["gun-hesaplama", "vki-hesaplama"],
 }

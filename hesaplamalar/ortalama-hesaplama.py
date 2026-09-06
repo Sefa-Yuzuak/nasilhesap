@@ -62,6 +62,8 @@ function hesapla(g){
         {"soru": "Medyan ile ortalama farkı nedir?", "cevap": "Ortalama toplam ÷ adet; medyan ortadaki değer. 1, 2, 3, 4, 100 → ortalama 22, medyan 3. Uç değer varsa medyan daha gerçekçidir."},
         {"soru": "Standart sapma neyi gösterir?", "cevap": "Verilerin ortalamadan ortalama ne kadar uzaklaştığını. Aynı ortalamaya sahip iki sınıftan sapması küçük olanın notları daha homojendir."},
     ],
-    "kaynaklar": [],
+    "kaynaklar": [
+        {"ad": "TÜİK — Merkezî eğilim ve dağılım ölçüleri (istatistiksel kavramlar)", "url": "https://data.tuik.gov.tr/"},
+    ],
     "ilgili": ["yuzde-hesaplama", "gun-hesaplama"],
 }
