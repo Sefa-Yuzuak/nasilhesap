@@ -18,18 +18,21 @@ HESAP = {
 function hesapla(g, O){
   if (!(g.brut > 0)) return {hata: 'Brüt ücreti girin.'};
   if (!g.giris || !g.cikis) return {hata: 'Giriş ve çıkış tarihlerini seçin.'};
-  var gi = new Date(g.giris), ci = new Date(g.cikis);
+  var gi = new Date(g.giris + 'T00:00:00'), ci = new Date(g.cikis + 'T00:00:00');
   var gun = Math.round((ci - gi) / 86400000);
   if (gun <= 0) return {hata: 'Çıkış tarihi giriş tarihinden sonra olmalı.'};
-  var yil = Math.floor(gun / 365), kalanGun = gun - yil * 365;
+  // takvime göre yıl / ay / gün (artık yıllar gerçek takvimle)
+  var yil = ci.getFullYear() - gi.getFullYear(), ayF = ci.getMonth() - gi.getMonth(), gn = ci.getDate() - gi.getDate();
+  if (gn < 0) { ayF--; gn += new Date(ci.getFullYear(), ci.getMonth(), 0).getDate(); }
+  if (ayF < 0) { yil--; ayF += 12; }
   var ayNo = ci.getMonth() + 1, ciYil = ci.getFullYear();
   var tavan = ayNo <= 6 ? O.kidem.tavan_ocak_haziran : O.kidem.tavan_temmuz_aralik;
   var esas = Math.min(g.brut, tavan);
   var s = [], n = [];
-  if (gun < 365) {
+  if (yil < 1) {
     s.push({etiket: 'Kıdem tazminatı', deger: 'Hak yok (1 yıl dolmadı)', vurgu: true});
   } else {
-    var kidemBrut = esas * yil + esas * (kalanGun / 365);
+    var kidemBrut = esas * yil + esas * ayF / 12 + esas * gn / 365;
     var damga = kidemBrut * O.kidem.damga_oran;
     s.push({etiket: 'Net kıdem tazminatı', deger: kidemBrut - damga, birim: '₺', vurgu: true});
     s.push({etiket: 'Brüt kıdem tazminatı', deger: kidemBrut, birim: '₺'});
@@ -37,10 +40,10 @@ function hesapla(g, O){
     s.push({etiket: 'Hesaba esas aylık ücret', deger: esas, birim: '₺'});
     if (g.brut > tavan) n.push('Brüt ücret tavanı aştığı için hesap tavan (' + NH.fmt(tavan) + ' ₺) üzerinden yapıldı.');
   }
-  s.push({etiket: 'Çalışma süresi', deger: yil + ' yıl ' + Math.floor(kalanGun / 30) + ' ay ' + (kalanGun % 30) + ' gün (' + gun + ' gün)'});
+  s.push({etiket: 'Çalışma süresi', deger: yil + ' yıl ' + ayF + ' ay ' + gn + ' gün (' + gun + ' gün)'});
   if (g.ihbar) {
-    var ay = gun / 30.4375, hafta = 8;
-    for (var i = 0; i < O.ihbar.sureler_hafta.length; i++) { var ust = O.ihbar.sureler_hafta[i][0]; if (ust === null || ay < ust) { hafta = O.ihbar.sureler_hafta[i][1]; break; } }
+    var ayToplam = gun / 30.4375, hafta = 8;
+    for (var i = 0; i < O.ihbar.sureler_hafta.length; i++) { var ust = O.ihbar.sureler_hafta[i][0]; if (ust === null || ayToplam < ust) { hafta = O.ihbar.sureler_hafta[i][1]; break; } }
     var ihbarBrut = (g.brut / 30) * 7 * hafta;
     s.push({etiket: 'İhbar süresi', deger: hafta + ' hafta'});
     s.push({etiket: 'İhbar tazminatı (brüt)', deger: ihbarBrut, birim: '₺'});
@@ -57,14 +60,14 @@ function hesapla(g, O){
         "İhbar tazminatı ise belirsiz süreli sözleşmeyi bildirim süresine uymadan fesheden tarafın ödediği tutardır. Bildirim süresi kıdeme göre 2, 4, 6 veya 8 haftadır ve ihbar tazminatı bu haftaların ücreti kadardır. Kıdem tazminatından farklı olarak ihbar tazminatı gelir vergisine tabidir.",
     ],
     "formul": [
-        "Kıdem tazminatı (brüt) = min(giydirilmiş brüt, tavan) × yıl + min(giydirilmiş brüt, tavan) × (artan gün ÷ 365)",
+        "Kıdem tazminatı (brüt) = esas ücret × yıl + esas ücret × (artan ay ÷ 12) + esas ücret × (artan gün ÷ 365) · esas ücret = min(giydirilmiş brüt, tavan)",
         "Net kıdem = brüt kıdem − brüt kıdem × ‰7,59 (damga vergisi)",
         "İhbar süresi: 0-6 ay → 2 hafta · 6-18 ay → 4 hafta · 18-36 ay → 6 hafta · 36+ ay → 8 hafta",
         "İhbar tazminatı (brüt) = günlük brüt ücret × 7 × hafta",
     ],
     "ornekler": [
         {"baslik": "7 yıl 6 ay kıdem, 60.000 ₺ brüt, çıkış Eylül 2026",
-         "adimlar": ["Tavan 73.729,84 ₺ > 60.000 ₺ → esas ücret 60.000 ₺", "Tam yıllar: 60.000 × 7 = 420.000 ₺", "Artan 6 ay (≈182 gün): 60.000 × 182/365 ≈ 29.918 ₺", "Brüt kıdem ≈ 449.918 ₺; damga ‰7,59 ≈ 3.415 ₺; net ≈ 446.503 ₺", "İhbar: 36+ ay → 8 hafta → 60.000/30 × 7 × 8 = 112.000 ₺ brüt"]},
+         "adimlar": ["Tavan 73.729,84 ₺ > 60.000 ₺ → esas ücret 60.000 ₺", "Tam yıllar: 60.000 × 7 = 420.000 ₺", "Artan 6 ay: 60.000 × 6/12 = 30.000 ₺", "Brüt kıdem 450.000 ₺; damga ‰7,59 = 3.415,50 ₺; net 446.584,50 ₺", "İhbar: 36+ ay → 8 hafta → 60.000/30 × 7 × 8 = 112.000 ₺ brüt"]},
         {"baslik": "Tavanı aşan ücret: 100.000 ₺ brüt, 3 yıl, çıkış Mart 2026",
          "adimlar": ["Tavan Ocak-Haziran 64.948,77 ₺ < 100.000 ₺ → esas ücret 64.948,77 ₺", "Brüt kıdem: 64.948,77 × 3 = 194.846,31 ₺", "Damga: 1.478,88 ₺ → net 193.367,43 ₺"]},
     ],

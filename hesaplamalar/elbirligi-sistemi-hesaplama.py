@@ -55,7 +55,7 @@ function hesapla(g){
         {"baslik": "2.000.000 ₺ ev finansmanı, 120 ay, %7 ücret, 40. ayda teslim",
          "adimlar": ["Taksit: 2.000.000 ÷ 120 = 16.667 ₺", "Organizasyon ücreti: 140.000 ₺ → toplam ödeme 2.140.000 ₺", "40. aya kadar biriken: 666.667 ₺; şirket 1.333.333 ₺ finanse eder", "Teslim sonrası 80 ay daha 16.667 ₺ ödenir"]},
         {"baslik": "Aynı ev banka konut kredisiyle (%2,5 aylık, 120 ay)",
-         "adimlar": ["Taksit ≈ 52.073 ₺, toplam ≈ 6.248.700 ₺", "Fark: elbirliğinde toplam 2.140.000 ₺ — ancak evi 40 ay bekleyerek alırsınız; kredide hemen"]},
+         "adimlar": ["Taksit ≈ 52.724 ₺, toplam ≈ 6.326.830 ₺", "Fark: elbirliğinde toplam 2.140.000 ₺ — ancak evi 40 ay bekleyerek alırsınız; kredide hemen"]},
     ],
     "tablo": {
         "baslik": "Elbirliği sistemi ile banka kredisi karşılaştırması",

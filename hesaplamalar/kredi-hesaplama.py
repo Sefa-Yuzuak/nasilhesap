@@ -7,7 +7,7 @@ HESAP = {
     "populer": True,
     "guncelleme": "2026-09-06",
     "aciklama": "Kredi hesaplama aracı: kredi tutarı, aylık faiz oranı ve vadeye göre aylık taksit, toplam geri ödeme, toplam faiz ve KKDF-BSMV dahil maliyet. İhtiyaç, taşıt ve konut kredisi için ödeme planı.",
-    "kisa_cevap": "Aylık taksit = kredi × r ÷ (1 − (1 + r)^−n); r = aylık faiz (vergiler dahil), n = vade ay. İhtiyaç ve taşıt kredilerinde faize %15 KKDF + %15 BSMV eklenir (etkin faiz = faiz × 1,30); konut kredisi bu vergilerden muaftır. 100.000 ₺, %3,5 aylık, 12 ay ihtiyaç kredisinin taksiti yaklaşık 10.906 ₺'dir.",
+    "kisa_cevap": "Aylık taksit = kredi × r ÷ (1 − (1 + r)^−n); r = aylık faiz (vergiler dahil), n = vade ay. İhtiyaç ve taşıt kredilerinde faize %15 KKDF + %15 BSMV eklenir (etkin faiz = faiz × 1,30); konut kredisi bu vergilerden muaftır. 100.000 ₺, %3,5 aylık, 12 ay ihtiyaç kredisinin taksiti yaklaşık 10.998 ₺, toplam geri ödemesi 131.976 ₺'dir.",
     "girdiler": [
         {"id": "tutar", "etiket": "Kredi tutarı", "tip": "sayi", "varsayilan": "100000", "birim": "₺"},
         {"id": "faiz", "etiket": "Aylık faiz oranı", "tip": "sayi", "varsayilan": "3.5", "birim": "%"},
@@ -56,8 +56,8 @@ function hesapla(g){
         "Her ay: faiz = kalan anapara × r · anapara ödemesi = taksit − faiz",
     ],
     "ornekler": [
-        {"baslik": "100.000 ₺ ihtiyaç kredisi, %3,5 aylık, 12 ay", "adimlar": ["Etkin faiz: 3,5 × 1,30 = %4,55 → r = 0,0455", "Taksit: 100.000 × 0,0455 ÷ (1 − 1,0455^−12) ≈ 10.906 ₺", "Toplam: ≈ 130.872 ₺; maliyet ≈ 30.872 ₺ (faiz ≈ 23.748 + vergi ≈ 7.124)"]},
-        {"baslik": "1.000.000 ₺ konut kredisi, %2,5 aylık, 120 ay", "adimlar": ["Vergi yok → r = 0,025", "Taksit: 1.000.000 × 0,025 ÷ (1 − 1,025^−120) ≈ 26.036 ₺", "Toplam ≈ 3.124.320 ₺"]},
+        {"baslik": "100.000 ₺ ihtiyaç kredisi, %3,5 aylık, 12 ay", "adimlar": ["Etkin faiz: 3,5 × 1,30 = %4,55 → r = 0,0455", "Taksit: 100.000 × 0,0455 ÷ (1 − 1,0455^−12) ≈ 10.998 ₺", "Toplam: ≈ 131.976 ₺; maliyet ≈ 31.976 ₺ (faiz ≈ 24.597 + vergi ≈ 7.379)"]},
+        {"baslik": "1.000.000 ₺ konut kredisi, %2,5 aylık, 120 ay", "adimlar": ["Vergi yok → r = 0,025", "Taksit: 1.000.000 × 0,025 ÷ (1 − 1,025^−120) ≈ 26.362 ₺", "Toplam ≈ 3.163.415 ₺; faiz ≈ 2.163.415 ₺"]},
     ],
     "tablo": {
         "baslik": "Kredi türüne göre vergi yükü",

@@ -57,8 +57,8 @@ function hesapla(g, O){
     sonuclar: [
       {etiket: g.mod === 'brutten' ? aylar[ay-1] + ' net maaş' : 'Gerekli brüt maaş (' + aylar[ay-1] + ')', deger: g.mod === 'brutten' ? r.net : brut, birim: '₺', vurgu: true},
       {etiket: 'Brüt maaş', deger: brut, birim: '₺'},
-      {etiket: 'SGK işçi payı (%' + (O.sgk.isci_orani*100) + ')', deger: b.sgk, birim: '₺'},
-      {etiket: 'İşsizlik sigortası (%' + (O.sgk.issizlik_isci_orani*100) + ')', deger: b.iss, birim: '₺'},
+      {etiket: 'SGK işçi payı (%' + Math.round(O.sgk.isci_orani*100) + ')', deger: b.sgk, birim: '₺'},
+      {etiket: 'İşsizlik sigortası (%' + Math.round(O.sgk.issizlik_isci_orani*100) + ')', deger: b.iss, birim: '₺'},
       {etiket: 'Gelir vergisi (istisna sonrası)', deger: r.gv, birim: '₺'},
       {etiket: 'Damga vergisi (istisna sonrası)', deger: r.dv, birim: '₺'},
       {etiket: 'Net maaş (' + aylar[ay-1] + ')', deger: r.net, birim: '₺'},

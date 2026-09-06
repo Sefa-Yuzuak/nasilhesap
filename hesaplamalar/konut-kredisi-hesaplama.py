@@ -7,7 +7,7 @@ HESAP = {
     "populer": True,
     "guncelleme": "2026-09-06",
     "aciklama": "Konut kredisi hesaplama: ev fiyatı, peşinat oranı, aylık faiz ve vadeye göre aylık taksit, toplam geri ödeme, toplam faiz ve tapu harcı dahil ev alma maliyeti. KKDF-BSMV muafiyeti, ödeme planı.",
-    "kisa_cevap": "Konut kredisi taksiti = kredi × r ÷ (1 − (1 + r)^−n); konut kredilerinde KKDF ve BSMV alınmadığı için r doğrudan bankanın aylık faizidir. 5.000.000 ₺'lik evde %20 peşinatla 4.000.000 ₺ krediyi %2,5 aylık faiz ve 120 ay vadeyle aylık yaklaşık 104.145 ₺ taksitle ödersiniz; tapu harcı alıcı için ‰20'dir.",
+    "kisa_cevap": "Konut kredisi taksiti = kredi × r ÷ (1 − (1 + r)^−n); konut kredilerinde KKDF ve BSMV alınmadığı için r doğrudan bankanın aylık faizidir. 5.000.000 ₺'lik evde %20 peşinatla 4.000.000 ₺ krediyi %2,5 aylık faiz ve 120 ay vadeyle aylık yaklaşık 105.447 ₺ taksitle ödersiniz; tapu harcı alıcı için ‰20'dir.",
     "girdiler": [
         {"id": "fiyat", "etiket": "Ev fiyatı", "tip": "sayi", "varsayilan": "5000000", "birim": "₺"},
         {"id": "pesinat", "etiket": "Peşinat oranı", "tip": "sayi", "varsayilan": "20", "birim": "%"},
@@ -54,8 +54,8 @@ function hesapla(g, O){
         "Tapu harcı (alıcı) = ev fiyatı × ‰20",
     ],
     "ornekler": [
-        {"baslik": "5.000.000 ₺ ev, %20 peşinat, %2,5 aylık, 120 ay", "adimlar": ["Peşinat 1.000.000 ₺ → kredi 4.000.000 ₺", "Taksit ≈ 4.000.000 × 0,025 ÷ (1 − 1,025^−120) ≈ 104.145 ₺", "Toplam geri ödeme ≈ 12.497.400 ₺; faiz ≈ 8.497.400 ₺", "Tapu harcı 100.000 ₺ → toplam maliyet ≈ 13.597.400 ₺"]},
-        {"baslik": "Aynı kredi, 60 ay vade", "adimlar": ["Taksit ≈ 134.632 ₺ (daha yüksek)", "Toplam ≈ 8.077.900 ₺; faiz ≈ 4.077.900 ₺ — 120 aya göre 4,4 milyon ₺ daha az"]},
+        {"baslik": "5.000.000 ₺ ev, %20 peşinat, %2,5 aylık, 120 ay", "adimlar": ["Peşinat 1.000.000 ₺ → kredi 4.000.000 ₺", "Taksit ≈ 4.000.000 × 0,025 ÷ (1 − 1,025^−120) ≈ 105.447 ₺", "Toplam geri ödeme ≈ 12.653.660 ₺; faiz ≈ 8.653.660 ₺", "Tapu harcı 100.000 ₺ → toplam maliyet (peşinat dahil) ≈ 13.753.660 ₺"]},
+        {"baslik": "Aynı kredi, 60 ay vade", "adimlar": ["Taksit ≈ 129.413 ₺ (daha yüksek)", "Toplam ≈ 7.764.780 ₺; faiz ≈ 3.764.780 ₺ — 120 aya göre yaklaşık 4,9 milyon ₺ daha az"]},
     ],
     "tablo": None,
     "sss": [

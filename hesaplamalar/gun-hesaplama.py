@@ -24,8 +24,8 @@ function hesapla(g){
   if (d < 0) { m--; d += new Date(b.getFullYear(), b.getMonth(), 0).getDate(); }
   if (m < 0) { y--; m += 12; }
   // iş günü (Pzt-Cum)
-  var is = 0, c = new Date(a); var son = new Date(b); if (!g.dahil) son.setDate(son.getDate() - 1);
-  if (g.dahil) c.setDate(c.getDate() + 0); else c.setDate(c.getDate() + 1);
+  var is = 0, c = new Date(a), son = new Date(b);
+  if (!g.dahil) c.setDate(c.getDate() + 1); // başlangıç günü sayılmaz, bitiş günü sayılır
   for (var t = new Date(c); t <= son; t.setDate(t.getDate() + 1)) { var w = t.getDay(); if (w !== 0 && w !== 6) is++; }
   return {
     sonuclar: [

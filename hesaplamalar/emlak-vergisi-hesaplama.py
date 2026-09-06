@@ -26,7 +26,7 @@ function hesapla(g, O){
       {etiket: 'Aylık karşılığı', deger: vergi / 12, birim: '₺'}
     ],
     notlar: ['Vergi değeri, belediyece takdir edilen arsa m² değeri ve bina inşaat maliyetine göre belirlenir; alım-satım bedeliyle aynı değildir ve her yıl yeniden değerleme oranının yarısı kadar artar.',
-             'Tek meskeni olan emekli, engelli, gazi, şehit yakını ve geliri olmayanlar (200 m²'yi aşmayan konut) için oran sıfıra indirilmiştir; belediyeye başvuru gerekir.']
+             'Tek meskeni olan emekli, engelli, gazi, şehit yakını ve geliri olmayanlar (200 m²’yi aşmayan konut) için oran sıfıra indirilmiştir; belediyeye başvuru gerekir.']
   };
 }
 """,
