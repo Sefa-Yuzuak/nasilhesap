@@ -6,6 +6,7 @@
 <title>{{ baslik }}</title>
 <meta name="description" content="{{ meta_desc }}">
 <link rel="canonical" href="{{ site.url }}{{ canonical }}">
+{% block robots %}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{% endblock %}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ site.ad }}">
 <meta property="og:title" content="{{ baslik }}">
