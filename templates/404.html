@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block icerik %}
+<section class="sayfa merkez">
+<h1>Sayfa bulunamadı</h1>
+<p class="buyuk">Aradığın hesaplayıcı taşınmış ya da hiç olmamış olabilir.</p>
+<p><a class="dugme" href="/">Ana sayfaya dön</a></p>
+<div class="etiketler">{% for k in kategoriler %}<a class="etiket" href="{{ k.url }}">{{ k.ikon }} {{ k.ad }}</a>{% endfor %}</div>
+</section>
+{% endblock %}

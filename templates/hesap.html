@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block icerik %}
+<nav class="kirinti" aria-label="Konum"><a href="/">Ana sayfa</a> › <a href="{{ h.kat.url }}">{{ h.kat.ad }}</a> › <span>{{ h.baslik }}</span></nav>
+
+<article class="hesap">
+  <header class="hesap-bas">
+    <h1>{{ h.h1 }}</h1>
+    <p class="kisa-cevap"><strong>Kısa cevap:</strong> {{ h.kisa_cevap }}</p>
+    <p class="soluk kucuk">Güncel oranlar: {{ oranlar.yil }} · Son güncelleme {{ h.guncelleme }} · Anında hesaplar, veri gönderilmez.</p>
+  </header>
+
+  <section class="kart hesaplayici" aria-label="Hesaplayıcı">
+    <form id="hesap-form" autocomplete="off" onsubmit="return false">
+      {% for g in h.girdiler %}
+      <div class="alan {% if g.genis %}genis{% endif %}" {% if g.gizli %}data-gizli="{{ g.gizli }}"{% endif %}>
+        <label for="g-{{ g.id }}">{{ g.etiket }}{% if g.ipucu %} <small class="soluk">({{ g.ipucu }})</small>{% endif %}</label>
+        {% if g.tip == 'secim' %}
+        <select id="g-{{ g.id }}" name="{{ g.id }}" data-tip="secim">
+          {% for deger, ad in g.secenekler %}<option value="{{ deger }}" {% if deger|string == g.varsayilan|string %}selected{% endif %}>{{ ad }}</option>{% endfor %}
+        </select>
+        {% elif g.tip == 'tarih' %}
+        <input type="date" id="g-{{ g.id }}" name="{{ g.id }}" data-tip="tarih" value="{{ g.varsayilan or '' }}">
+        {% elif g.tip == 'onay' %}
+        <label class="onay"><input type="checkbox" id="g-{{ g.id }}" name="{{ g.id }}" data-tip="onay" {% if g.varsayilan %}checked{% endif %}> {{ g.onay_metin or 'Evet' }}</label>
+        {% else %}
+        <div class="girdi {% if g.birim %}birimli{% endif %}">
+          <input type="text" inputmode="decimal" id="g-{{ g.id }}" name="{{ g.id }}" data-tip="{{ g.tip }}"
+                 value="{{ g.varsayilan if g.varsayilan is not none else '' }}" placeholder="{{ g.placeholder or '0' }}">
+          {% if g.birim %}<span class="birim">{{ g.birim }}</span>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+      <div class="alan genis dugmeler">
+        <button type="button" class="dugme" id="hesapla-btn">Hesapla</button>
+        <button type="button" class="dugme ikincil" id="sifirla-btn">Sıfırla</button>
+      </div>
+    </form>
+    <div id="sonuc" class="sonuc" aria-live="polite">
+      <p class="soluk">Değerleri girin, sonuç anında görünür.</p>
+    </div>
+  </section>
+
+  <section class="icerik-bolum">
+    <h2>{{ h.baslik }} nasıl yapılır?</h2>
+    {% for p in h.nasil %}<p>{{ p }}</p>{% endfor %}
+    <h3>Formül</h3>
+    <ul class="formul">
+      {% for f in h.formul %}<li><code>{{ f }}</code></li>{% endfor %}
+    </ul>
+  </section>
+
+  {% if h.ornekler %}
+  <section class="icerik-bolum">
+    <h2>Örnek hesaplamalar</h2>
+    {% for o in h.ornekler %}
+    <div class="ornek">
+      <h3>{{ o.baslik }}</h3>
+      <ol>{% for a in o.adimlar %}<li>{{ a }}</li>{% endfor %}</ol>
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if h.tablo %}
+  <section class="icerik-bolum">
+    <h2>{{ h.tablo.baslik }}</h2>
+    <div class="tablo-kap"><table>
+      <thead><tr>{% for b in h.tablo.basliklar %}<th>{{ b }}</th>{% endfor %}</tr></thead>
+      <tbody>{% for s in h.tablo.satirlar %}<tr>{% for c in s %}<td>{{ c }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+    </table></div>
+    {% if h.tablo.not %}<p class="soluk kucuk">{{ h.tablo.not }}</p>{% endif %}
+  </section>
+  {% endif %}
+
+  <section class="icerik-bolum">
+    <h2>Sık sorulan sorular</h2>
+    {% for s in h.sss %}
+    <details class="sss"><summary>{{ s.soru }}</summary><p>{{ s.cevap }}</p></details>
+    {% endfor %}
+  </section>
+
+  {% if h.kaynaklar %}
+  <section class="icerik-bolum kaynaklar">
+    <h2>Kaynaklar</h2>
+    <ul>{% for k in h.kaynaklar %}<li><a href="{{ k.url }}" rel="noopener nofollow" target="_blank">{{ k.ad }}</a></li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if h.ilgili_hesaplar %}
+  <section class="icerik-bolum">
+    <h2>İlgili hesaplamalar</h2>
+    <div class="izgara">
+      {% for i in h.ilgili_hesaplar %}
+      <a class="kart arac" href="{{ i.url }}"><span class="ikon">{{ i.kat.ikon }}</span><strong>{{ i.baslik }}</strong><span class="soluk kucuk">{{ i.aciklama[:90] }}…</span></a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+
+<script>
+{{ h.js|safe }}
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block icerik %}
+<nav class="kirinti" aria-label="Konum"><a href="/">Ana sayfa</a> › <span>{{ kat.ad }}</span></nav>
+<header class="sayfa-bas">
+  <h1>{{ kat.ikon }} {{ kat.ad }} Hesaplamaları</h1>
+  <p class="buyuk">{{ kat.aciklama }} {{ oranlar.yil }} güncel oranlarla.</p>
+</header>
+<div class="izgara">
+  {% for h in kat.hesaplar %}
+  <a class="kart arac" href="{{ h.url }}"><strong>{{ h.baslik }}</strong><span class="soluk">{{ h.aciklama[:140] }}…</span></a>
+  {% endfor %}
+</div>
+{% if not kat.hesaplar %}<p class="soluk">Bu kategorideki araçlar yakında.</p>{% endif %}
+{% endblock %}

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ baslik }}</title>
+<meta name="description" content="{{ meta_desc }}">
+<link rel="canonical" href="{{ site.url }}{{ canonical }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.ad }}">
+<meta property="og:title" content="{{ baslik }}">
+<meta property="og:description" content="{{ meta_desc }}">
+<meta property="og:url" content="{{ site.url }}{{ canonical }}">
+<meta property="og:image" content="{{ site.url }}/static/og.png">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#4f46e5">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/s.css">
+{% if site.gsc %}<meta name="google-site-verification" content="{{ site.gsc }}">{% endif %}
+{% for s in schema %}
+<script type="application/ld+json">{{ s|json|safe }}</script>
+{% endfor %}
+<script>window.ORAN={{ oranlar|json|safe }};</script>
+<!-- derleme: {{ site.derleme_zamani }} -->
+</head>
+<body>
+<a class="atla" href="#icerik">İçeriğe geç</a>
+<header class="ust">
+  <div class="kap ust-ic">
+    <a class="logo" href="/" aria-label="{{ site.ad }} ana sayfa">
+      <img src="/static/logo.svg" alt="" width="32" height="32"><span>Nasıl<b>Hesap</b></span>
+    </a>
+    <nav class="menu" aria-label="Kategoriler">
+      {% for k in kategoriler %}<a href="{{ k.url }}">{{ k.ad }}</a>{% endfor %}
+    </nav>
+    <form class="ara" role="search" action="/" method="get">
+      <input type="search" name="q" id="q" placeholder="Hesaplama ara… (ör. KDV, kıdem)" aria-label="Hesaplama ara" autocomplete="off">
+      <div id="ara-sonuc" class="ara-sonuc" hidden></div>
+    </form>
+  </div>
+</header>
+<main id="icerik" class="kap">
+{% block icerik %}{% endblock %}
+</main>
+<footer class="alt">
+  <div class="kap">
+    <div class="alt-ust">
+      <div>
+        <a class="logo" href="/"><img src="/static/logo.svg" alt="" width="28" height="28"><span>Nasıl<b>Hesap</b></span></a>
+        <p class="soluk">{{ site.slogan }} Tüm oranlar resmî kaynaklıdır; son oran güncellemesi {{ site.oranlar_guncelleme }}.</p>
+      </div>
+      <nav aria-label="Kategoriler">
+        {% for k in kategoriler %}<a href="{{ k.url }}">{{ k.ikon }} {{ k.ad }}</a>{% endfor %}
+      </nav>
+      <nav aria-label="Site">
+        <a href="/hakkinda/">Hakkında</a>
+        <a href="/kaynaklar/">Veri kaynakları</a>
+        <a href="/gizlilik/">Gizlilik</a>
+      </nav>
+    </div>
+    <p class="alt-not">Sonuçlar bilgilendirme amaçlıdır; resmî işlemler için ilgili kurum ve mali müşavirinize danışın. © {{ site.yil }} {{ site.ad }}</p>
+  </div>
+</footer>
+<script src="/static/h.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "_not": "Tüm resmî oranlar tek yerde. Her kalemde kaynak var; uydurma değer yok. Yıl değişince burası güncellenir.",
+  "yil": 2026,
+  "guncelleme": "2026-09-06",
+
+  "kdv": {
+    "oranlar": [1, 10, 20],
+    "varsayilan": 20,
+    "aciklama": {"1": "Temel gıda (ekmek, un, bakliyat vb.), bazı tarım ürünleri, gazete-kitap (basılı)", "10": "Gıda (genel), lokanta, konaklama, tekstil-konfeksiyon, sağlık, eğitim, 150 m² altı konut (net alan)", "20": "Genel oran: diğer tüm mal ve hizmetler, beyaz eşya, elektronik, otomobil"},
+    "kaynak": {"ad": "GİB – KDV oranları (7346 sayılı Cumhurbaşkanı Kararı, RG 7.7.2023)", "url": "https://www.gib.gov.tr/"}
+  },
+
+  "asgari_ucret": {
+    "brut": 33030.00, "net": 28075.50, "gunluk_brut": 1101.00,
+    "sgk_isci": 4624.20, "issizlik_isci": 330.30, "gelir_vergisi": 0, "damga_vergisi": 0,
+    "kaynak": {"ad": "Asgari Ücret Tespit Komisyonu Kararı (RG, Aralık 2025) – ÇSGB", "url": "https://www.csgb.gov.tr/"}
+  },
+
+  "sgk": {
+    "isci_orani": 0.14, "issizlik_isci_orani": 0.01,
+    "isveren_orani": 0.205, "issizlik_isveren_orani": 0.02,
+    "taban": 33030.00, "tavan": 297270.00,
+    "not": "İşveren payı teşvik hariç genel orandır (5510 s.K. m.81). Tavan = asgari ücretin 9 katı.",
+    "kaynak": {"ad": "SGK – 2026 prim parametreleri", "url": "https://www.sgk.gov.tr/"}
+  },
+
+  "damga_vergisi": {"ucret_oran": 0.00759, "kaynak": {"ad": "488 sayılı Damga Vergisi Kanunu (1) sayılı tablo – ücretlerde binde 7,59", "url": "https://www.gib.gov.tr/"}},
+
+  "gelir_vergisi": {
+    "ucret": [[190000, 0.15], [400000, 0.20], [1500000, 0.27], [5300000, 0.35], [null, 0.40]],
+    "diger": [[190000, 0.15], [400000, 0.20], [1000000, 0.27], [5300000, 0.35], [null, 0.40]],
+    "asgari_ucret_istisnasi": true,
+    "kaynak": {"ad": "Resmî Gazete 31.12.2025 Sayı 33124 (5. Mükerrer) – Gelir Vergisi Genel Tebliği Seri No 332", "url": "https://www.gib.gov.tr/"}
+  },
+
+  "kidem": {
+    "tavan_ocak_haziran": 64948.77, "tavan_temmuz_aralik": 73729.84,
+    "damga_oran": 0.00759,
+    "kaynak": {"ad": "Hazine ve Maliye Bakanlığı – Ocak/Temmuz 2026 memur maaş katsayısı genelgeleri (kıdem tavanı)", "url": "https://www.hmb.gov.tr/"}
+  },
+
+  "ihbar": {
+    "sureler_hafta": [[6, 2], [18, 4], [36, 6], [null, 8]],
+    "kaynak": {"ad": "4857 sayılı İş Kanunu m.17", "url": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4857&MevzuatTur=1&MevzuatTertip=5"}
+  },
+
+  "kira_artis": {
+    "ay": "2026-09", "ay_ad": "Eylül 2026", "oran": 31.79,
+    "onceki": [["Ağustos 2026", 31.90]],
+    "aciklama_tarihi": "3 Eylül 2026",
+    "kaynak": {"ad": "TÜİK – TÜFE, 12 aylık ortalamalara göre değişim; Türk Borçlar Kanunu m.344", "url": "https://data.tuik.gov.tr/"}
+  },
+
+  "tapu_harci": {
+    "alici_binde": 20, "satici_binde": 20,
+    "doner_sermaye_buyuksehir": 6700, "doner_sermaye_diger": 3400, "doner_sermaye_not": "2026 yaklaşık; il ve işlem türüne göre değişir",
+    "kaynak": {"ad": "492 sayılı Harçlar Kanunu (4) sayılı tarife 20/a; TKGM döner sermaye ücret tarifesi 2026", "url": "https://www.tkgm.gov.tr/"}
+  },
+
+  "emlak_vergisi": {
+    "normal": {"konut": 1, "isyeri": 2, "arsa": 3, "arazi": 1},
+    "buyuksehir": {"konut": 2, "isyeri": 4, "arsa": 6, "arazi": 2},
+    "birim": "binde",
+    "kaynak": {"ad": "1319 sayılı Emlak Vergisi Kanunu m.8 ve m.18; TÜRMOB 2026 uygulama özeti", "url": "https://www.turmob.org.tr/"}
+  },
+
+  "kira_geliri_istisna": {"tutar": 58000, "kaynak": {"ad": "GVK m.21 – 2026 konut kira geliri istisnası (RG 33124, 5. Mük.)", "url": "https://www.gib.gov.tr/"}}
+}

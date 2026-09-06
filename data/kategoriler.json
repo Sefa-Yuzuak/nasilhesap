@@ -1,0 +1,14 @@
+[
+  {"slug": "vergi-maas", "ad": "Vergi & Maaş", "ikon": "💼",
+   "aciklama": "KDV, brüt-net maaş, kıdem ve ihbar tazminatı, gelir vergisi dilimleri, SGK kesintileri."},
+  {"slug": "kredi-finans", "ad": "Kredi & Finans", "ikon": "🏦",
+   "aciklama": "Kredi taksiti, faiz, mevduat getirisi, kira artış oranı, döviz ve altın."},
+  {"slug": "ev-emlak", "ad": "Ev & Emlak", "ikon": "🏠",
+   "aciklama": "Konut kredisi, tapu harcı, emlak vergisi, kira geliri vergisi, elbirliği (tasarruf finansman) sistemi."},
+  {"slug": "gunluk", "ad": "Günlük", "ikon": "📅",
+   "aciklama": "Yüzde, yaş, iki tarih arası gün, indirim, ortalama, birim çevirme, zekât."},
+  {"slug": "saglik", "ad": "Sağlık", "ikon": "❤️",
+   "aciklama": "Vücut kitle indeksi, günlük kalori, ideal kilo, gebelik ve doğum tarihi."},
+  {"slug": "sinav-egitim", "ad": "Sınav & Eğitim", "ikon": "🎓",
+   "aciklama": "YKS, LGS, KPSS, DGS puan hesaplama, not ortalaması, vize-final."}
+]
