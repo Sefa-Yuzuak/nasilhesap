@@ -1,6 +1,6 @@
 # nasilhesap.com
 
-Türkiye için güncel, kaynaklı, reklamsız hesaplama araçları. Statik site; hesaplamalar tarayıcıda çalışır.
+Türkiye için güncel, kaynaklı, ücretsiz hesaplama araçları. Statik site; hesaplamalar tarayıcıda çalışır.
 
 ## Çalıştırma
 

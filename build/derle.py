@@ -221,6 +221,11 @@ def main():
     (DIST / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {site['url']}/sitemap.xml\n", encoding="utf-8")
 
+    # AdSense yetkili satici beyani: /ads.txt yoksa Google reklam talebini kisitlar.
+    if site.get("adsense"):
+        (DIST / "ads.txt").write_text(
+            f"google.com, {site['adsense'].removeprefix('ca-')}, DIRECT, f08c47fec0942fa0\n", encoding="utf-8")
+
     llms = [f"# {site['ad']}", "", f"> {site['aciklama']}", "",
             f"Tüm oranlar resmî kaynaklıdır (GİB, SGK, TÜİK, Resmî Gazete). Son oran güncellemesi: {oranlar['guncelleme']}.", ""]
     for k in kategoriler:
