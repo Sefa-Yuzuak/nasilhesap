@@ -163,8 +163,20 @@ th{background:var(--zemin);font-size:.9rem}
   .sonuc{padding:15px}
   .sonuc-ana .deg{font-size:1.72rem}
   .sonuc-satir{padding:11px 0}
-  .tablo-kap{-webkit-overflow-scrolling:touch}
-  .tablo-kap table{min-width:460px}
+  /* min-width:460px tabloyu 298px'lik kapta kaydırmaya zorluyordu: 5 sütunlu
+     net hesaplama tablosunun yarısı görünmüyor, kaydırılabildiğine dair bir
+     işaret de yok. Her satır artık bir kart; sütun başlığı data-etiket'ten
+     hücrenin önüne basılıyor, thead ekran okuyucular için yerinde duruyor. */
+  .tablo-kap{-webkit-overflow-scrolling:touch;overflow-x:visible}
+  .tablo-kap table{min-width:0;display:block}
+  .tablo-kap thead{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .tablo-kap tbody,.tablo-kap tr,.tablo-kap td{display:block}
+  .tablo-kap tr{border:1px solid var(--cizgi);border-radius:10px;background:#fff;padding:.3rem .8rem;margin:0 0 .6rem}
+  .tablo-kap tr:last-child{margin-bottom:0}
+  .tablo-kap td{border-bottom:1px solid var(--cizgi);padding:.5rem 0}
+  .tablo-kap tr td:last-child{border-bottom:0}
+  .tablo-kap td::before{content:attr(data-etiket);display:block;font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--soluk);margin-bottom:.1rem}
+  .tablo-kap td:not([data-etiket])::before{display:none}
   th,td{padding:10px 9px;font-size:.92rem}
   .sss summary{padding:12px 0;min-height:44px}
   .kirinti{font-size:.85rem}

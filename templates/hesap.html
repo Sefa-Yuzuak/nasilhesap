@@ -90,7 +90,8 @@
     <h2>{{ h.tablo.baslik }}</h2>
     <div class="tablo-kap"><table>
       <thead><tr>{% for b in h.tablo.basliklar %}<th>{{ b }}</th>{% endfor %}</tr></thead>
-      <tbody>{% for s in h.tablo.satirlar %}<tr>{% for c in s %}<td>{{ c }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+      {# data-etiket: dar ekranda satır karta dönüşüyor, sütun başlığı hücrenin önüne basılıyor #}
+      <tbody>{% for s in h.tablo.satirlar %}<tr>{% for c in s %}<td data-etiket="{{ h.tablo.basliklar[loop.index0] }}">{{ c }}</td>{% endfor %}</tr>{% endfor %}</tbody>
     </table></div>
     {% if h.tablo.not %}<p class="soluk kucuk">{{ h.tablo.not }}</p>{% endif %}
   </section>
