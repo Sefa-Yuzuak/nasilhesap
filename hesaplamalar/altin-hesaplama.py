@@ -15,7 +15,9 @@ HESAP = {
         {"ad": "22 ayar bilezik 50 gr", "degerler": {"gram_fiyat": "5000", "ceyrek": "0", "yarim": "0", "tam": "0", "cumhuriyet": "0", "gram_adet": "0", "bilezik_gr": "50"}},
     ],
     "girdiler": [
-        {"id": "gram_fiyat", "etiket": "Gram altın (24 ayar) fiyatı", "tip": "sayi", "varsayilan": "5000", "birim": "₺", "genis": True, "ipucu": "güncel kapalıçarşı/banka fiyatı"},
+        # Varsayilan 5.000 TL idi: tarihsiz ve kaynaksiz bir fiyatla sayfa acilip
+        # hemen sonuc gosteriyordu, ziyaretci guncel veri sanabiliyordu.
+        {"id": "gram_fiyat", "etiket": "Gram altın (24 ayar) fiyatı", "tip": "sayi", "varsayilan": "", "birim": "₺", "genis": True, "ipucu": "güncel kapalıçarşı/banka fiyatını yazın"},
         {"id": "ceyrek", "etiket": "Çeyrek altın adedi", "tip": "sayi", "varsayilan": "0", "birim": "adet"},
         {"id": "yarim", "etiket": "Yarım altın adedi", "tip": "sayi", "varsayilan": "0", "birim": "adet"},
         {"id": "tam", "etiket": "Tam altın adedi", "tip": "sayi", "varsayilan": "0", "birim": "adet"},

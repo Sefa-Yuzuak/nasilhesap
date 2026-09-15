@@ -17,7 +17,8 @@ HESAP = {
     "girdiler": [
         {"id": "mesafe", "etiket": "Mesafe (tek yön)", "tip": "sayi", "varsayilan": "450", "birim": "km"},
         {"id": "tuketim", "etiket": "100 km'de ortalama tüketim", "tip": "sayi", "varsayilan": "7", "birim": "L", "ipucu": "aracın ortalaması"},
-        {"id": "fiyat", "etiket": "Yakıt litre fiyatı", "tip": "sayi", "varsayilan": "50", "birim": "₺"},
+        # Varsayilan 50 TL/L idi: tarihsiz fiyat guncel saniliyordu.
+        {"id": "fiyat", "etiket": "Yakıt litre fiyatı", "tip": "sayi", "varsayilan": "", "birim": "₺", "ipucu": "istasyondaki güncel fiyatı yazın"},
         {"id": "gidis_donus", "etiket": "Yolculuk", "tip": "onay", "varsayilan": True, "onay_metin": "Gidiş-dönüş hesapla"},
         {"id": "kisi", "etiket": "Masrafı paylaşan kişi sayısı", "tip": "tamsayi", "varsayilan": "1", "birim": "kişi"},
     ],

@@ -114,7 +114,10 @@ def nasil_schema(site, h):
          "tool": [{"@type": "HowToTool", "name": h["h1"]}],
          "step": adimlar,
          "dateModified": h["guncelleme"]}
-    kayn = [k["ad"] for k in h.get("kaynaklar", [])]
+    # citation yalniz ad tasiyordu; sayfada zaten yayimli olan kaynak adresleri
+    # semadan dusuyor, alinti zinciri makineye kapali kaliyordu.
+    kayn = [{"@type": "CreativeWork", "name": k["ad"], "url": k["url"]}
+            for k in h.get("kaynaklar", []) if k.get("url")]
     if kayn:
         s["citation"] = kayn
     return s
