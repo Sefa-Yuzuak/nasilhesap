@@ -115,12 +115,47 @@
     return '<figure class="grafik-kap">' + (g.baslik ? '<figcaption>' + esc(g.baslik) + '</figcaption>' : '') + s + '<div class="lejant">' + lej + '</div></figure>';
   }
 
+  /* ---------- pay çubuğu: yığılmış yatay SVG (ör. anapara / faiz / vergi) ---------- */
+  var YUZDE = new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 1 });
+  function payCiz(p) {
+    if (!p || !p.parcalar) return '';
+    var renkler = ['#4f46e5', '#dc2626', '#d97706', '#059669'];
+    var parcalar = p.parcalar.filter(function (x) { return typeof x.deger === 'number' && x.deger > 0; });
+    var toplam = 0;
+    parcalar.forEach(function (x) { toplam += x.deger; });
+    if (!(toplam > 0)) return '';
+    var x = 0, s = '', lej = '', birim = p.birim ? ' ' + esc(p.birim) : '';
+    parcalar.forEach(function (par, i) {
+      var pay = 100 * par.deger / toplam, renk = par.renk || renkler[i % renkler.length], yz = YUZDE.format(pay);
+      s += '<rect x="' + x + '%" y="0" width="' + pay + '%" height="26" fill="' + renk + '"><title>' + esc(par.ad) + ' %' + yz + '</title></rect>';
+      if (pay >= 9) s += '<text x="' + (x + pay / 2) + '%" y="17" text-anchor="middle" class="py">%' + yz + '</text>';
+      lej += '<span class="lej"><i style="background:' + renk + '"></i>' + esc(par.ad) + ' %' + yz + ' (' + fmt(par.deger) + birim + ')</span>';
+      x += pay;
+    });
+    return '<figure class="pay-kap">' + (p.baslik ? '<figcaption>' + esc(p.baslik) + '</figcaption>' : '') +
+      '<svg class="pay" width="100%" height="26" role="img" aria-label="' + esc(p.baslik || 'pay') + '">' + s + '</svg>' +
+      '<div class="lejant">' + lej + '</div></figure>';
+  }
+
+  /* ---------- sonuç tablosu: td[data-etiket] dar ekranda satırı karta çevirir ---------- */
+  function tabloCiz(t) {
+    var h = (t.baslik ? '<p class="tablo-bas">' + esc(t.baslik) + '</p>' : '') + '<div class="tablo-kap"><table><thead><tr>' +
+      t.basliklar.map(function (b) { return '<th>' + esc(b) + '</th>'; }).join('') + '</tr></thead><tbody>';
+    t.satirlar.forEach(function (row) {
+      h += '<tr>' + row.map(function (c, i) {
+        return '<td data-etiket="' + esc(t.basliklar[i]) + '">' + (typeof c === 'number' ? fmt(c) : esc(c)) + '</td>';
+      }).join('') + '</tr>';
+    });
+    return h + '</tbody></table></div>';
+  }
+
   /* ---------- hesaplayıcı ---------- */
   var form = document.getElementById('hesap-form');
   var sonuc = document.getElementById('sonuc');
+  var sonucIc = document.getElementById('sonuc-ic');
   var sonSonuc = null;
 
-  if (form && sonuc && typeof window.hesapla === 'function') {
+  if (form && sonuc && sonucIc && typeof window.hesapla === 'function') {
     var alanlar = Array.prototype.slice.call(form.querySelectorAll('[name]'));
     var varsayilan = {};
     alanlar.forEach(function (el) { varsayilan[el.name] = el.type === 'checkbox' ? el.checked : el.value; });
@@ -152,8 +187,8 @@
       });
     }
     function ciz(r) {
-      if (!r) { sonuc.innerHTML = ''; return; }
-      if (r.hata) { sonuc.innerHTML = '<p class="sonuc-hata">' + esc(r.hata) + '</p>'; return; }
+      if (!r) { sonucIc.innerHTML = ''; return; }
+      if (r.hata) { sonucIc.innerHTML = '<p class="sonuc-hata">' + esc(r.hata) + '</p>'; miniGuncelle(null); return; }
       var h = '';
       (r.sonuclar || []).forEach(function (s) {
         var d = (typeof s.deger === 'number') ? fmt(s.deger, s.ondalik) : esc(s.deger);
@@ -162,19 +197,10 @@
         else h += '<div class="sonuc-satir"><span>' + esc(s.etiket) + '</span><b>' + d + b + '</b></div>';
       });
       if (r.grafik) h += grafikCiz(r.grafik);
-      if (r.tablo) {
-        h += '<div class="tablo-kap"><table><thead><tr>' + r.tablo.basliklar.map(function (x) { return '<th>' + esc(x) + '</th>'; }).join('') + '</tr></thead><tbody>';
-        r.tablo.satirlar.forEach(function (row) { h += '<tr>' + row.map(function (c) { return '<td>' + (typeof c === 'number' ? fmt(c) : esc(c)) + '</td>'; }).join('') + '</tr>'; });
-        h += '</tbody></table></div>';
-      }
+      if (r.pay) h += payCiz(r.pay);
+      if (r.tablo) h += tabloCiz(r.tablo);
       if (r.notlar && r.notlar.length) h += '<ul class="sonuc-not">' + r.notlar.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>';
-      h += '<div class="sonuc-eylem"><button type="button" class="mini" id="kopyala-btn">Sonucu kopyala</button>' +
-           '<button type="button" class="mini" id="paylas-btn">Bağlantıyı kopyala</button>' +
-           '<span id="eylem-not" class="soluk kucuk"></span></div>';
-      sonuc.innerHTML = h;
-      var kb = document.getElementById('kopyala-btn'), pb = document.getElementById('paylas-btn');
-      if (kb) kb.addEventListener('click', function () { panoya(metinOzet(r), 'Sonuç kopyalandı'); });
-      if (pb) pb.addEventListener('click', function () { panoya(paylasLink(), 'Bağlantı kopyalandı'); });
+      sonucIc.innerHTML = h;
       miniGuncelle(r);
     }
 
@@ -215,20 +241,38 @@
     }
     function metinOzet(r) {
       var l = [document.title.split('|')[0].trim()];
-      (r.sonuclar || []).forEach(function (s) {
+      ((r && r.sonuclar) || []).forEach(function (s) {
         var d = (typeof s.deger === 'number') ? fmt(s.deger, s.ondalik) : s.deger;
         l.push(s.etiket + ': ' + d + (s.birim ? ' ' + s.birim : ''));
       });
-      l.push(location.origin + location.pathname);
       return l.join('\n');
     }
-    function paylasLink() {
-      var g = oku(), p = [];
+    /* girdiler URL'de yaşar: her hesaplamada ?ad=deger yazılır, sayfa açılırken geri okunur.
+       Varsayılan değerlerdeyken adres temiz kalır. */
+    function paramlar() {
+      var p = [];
       alanlar.forEach(function (el) {
         var v = el.type === 'checkbox' ? (el.checked ? '1' : '0') : el.value;
-        if (v !== '' && v !== null && v !== undefined) p.push(encodeURIComponent(el.name) + '=' + encodeURIComponent(v));
+        if (v !== '') p.push(encodeURIComponent(el.name) + '=' + encodeURIComponent(v));
       });
-      return location.origin + location.pathname + (p.length ? '?' + p.join('&') : '');
+      return p.length ? '?' + p.join('&') : '';
+    }
+    function varsayilanMi() {
+      return alanlar.every(function (el) {
+        return el.type === 'checkbox' ? el.checked === !!varsayilan[el.name] : String(el.value) === String(varsayilan[el.name]);
+      });
+    }
+    function urlGuncelle() {
+      var hedef = location.pathname + (varsayilanMi() ? '' : paramlar());
+      if (hedef !== location.pathname + location.search) history.replaceState(null, '', hedef);
+    }
+    function paylasLink() { return location.origin + location.pathname + paramlar(); }
+    function paylas() {
+      var url = paylasLink();
+      if (navigator.share) {
+        navigator.share({ title: document.title.split('|')[0].trim(), text: metinOzet(sonSonuc), url: url })
+          .catch(function (e) { if (!e || e.name !== 'AbortError') panoya(url, 'Bağlantı kopyalandı'); });
+      } else panoya(url, 'Bağlantı kopyalandı');
     }
     function panoya(metin, mesaj) {
       var not = document.getElementById('eylem-not');
@@ -244,11 +288,15 @@
       var g = oku();
       gizliUygula(g);
       try { sonSonuc = window.hesapla(g, window.ORAN || {}); ciz(sonSonuc); }
-      catch (e) { sonuc.innerHTML = '<p class="sonuc-hata">Hesaplanamadı: ' + esc(e.message) + '</p>'; }
+      catch (e) { sonucIc.innerHTML = '<p class="sonuc-hata">Hesaplanamadı: ' + esc(e.message) + '</p>'; }
+      urlGuncelle();
     }
     form.addEventListener('input', calistir);
     form.addEventListener('change', calistir);
     var hb = document.getElementById('hesapla-btn'); if (hb) hb.addEventListener('click', calistir);
+    var kb = document.getElementById('kopyala-btn'); if (kb) kb.addEventListener('click', function () { panoya(metinOzet(sonSonuc) + '\n' + paylasLink(), 'Sonuç kopyalandı'); });
+    var pb = document.getElementById('paylas-btn'); if (pb) pb.addEventListener('click', paylas);
+    var yb = document.getElementById('yazdir-btn'); if (yb) yb.addEventListener('click', function () { window.print(); });
     var sb = document.getElementById('sifirla-btn');
     if (sb) sb.addEventListener('click', function () {
       alanlar.forEach(function (el) { if (el.type === 'checkbox') el.checked = !!varsayilan[el.name]; else el.value = varsayilan[el.name]; });

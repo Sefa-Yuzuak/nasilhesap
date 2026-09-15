@@ -32,6 +32,10 @@ function vergiHesap(matrah, dilimler){
   }
   return v;
 }
+function dilimOrani(matrah, dilimler){
+  for (var i = 0; i < dilimler.length; i++) if (dilimler[i][0] === null || matrah <= dilimler[i][0]) return dilimler[i][1];
+  return dilimler[dilimler.length - 1][1];
+}
 function bordro(brut, O){
   var sgkM = Math.min(brut, O.sgk.tavan);
   var sgk = sgkM * O.sgk.isci_orani, iss = sgkM * O.sgk.issizlik_isci_orani;
@@ -44,7 +48,7 @@ function bordro(brut, O){
     var kv = vergiHesap(kum, O.gelir_vergisi.ucret), ka = vergiHesap(kumA, O.gelir_vergisi.ucret);
     var gv = kv - onceV, ist = ka - onceA; onceV = kv; onceA = ka;
     var gvNet = Math.max(0, gv - ist), dvNet = Math.max(0, dv - dvIst);
-    rows.push({ay: m, gv: gvNet, dv: dvNet, net: brut - sgk - iss - gvNet - dvNet, kum: kum});
+    rows.push({ay: m, gv: gvNet, dv: dvNet, net: brut - sgk - iss - gvNet - dvNet, kum: kum, oran: dilimOrani(kum, O.gelir_vergisi.ucret)});
   }
   return {sgk: sgk, iss: iss, gvM: gvM, rows: rows};
 }
@@ -60,6 +64,8 @@ function hesapla(g, O){
   var b = bordro(brut, O), r = b.rows[ay - 1];
   var aylar = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
   var isveren = brut + Math.min(brut, O.sgk.tavan) * (O.sgk.isveren_orani + O.sgk.issizlik_isveren_orani);
+  var atlama = [];
+  b.rows.forEach(function(x, i){ if (i > 0 && x.oran > b.rows[i-1].oran) atlama.push(aylar[i] + ' → %' + Math.round(x.oran * 100)); });
   return {
     sonuclar: [
       {etiket: g.mod === 'brutten' ? aylar[ay-1] + ' net maaş' : 'Gerekli brüt maaş (' + aylar[ay-1] + ')', deger: g.mod === 'brutten' ? r.net : brut, birim: '₺', vurgu: true},
@@ -73,8 +79,10 @@ function hesapla(g, O){
     ],
     grafik: {tur: 'cizgi', baslik: 'Aylara göre net maaş (kümülatif vergi etkisi)', etiketler: aylar.map(function(a){ return a.slice(0,3); }),
              seriler: [{ad: 'Net maaş', veri: b.rows.map(function(x){ return x.net; })}, {ad: 'Brüt', veri: b.rows.map(function(){ return brut; }), renk: '#9ca3af'}]},
-    tablo: {basliklar: ['Ay', 'Gelir vergisi', 'Damga', 'Net'], satirlar: b.rows.map(function(x){ return [aylar[x.ay-1], x.gv, x.dv, x.net]; })},
-    notlar: ['Gelir vergisi matrahı: ' + NH.fmt(b.gvM) + ' ₺/ay (brüt − SGK − işsizlik). Kümülatif matrah dilim atladıkça vergi artar, net düşer.',
+    tablo: {baslik: '12 aylık bordro: kümülatif matrah, vergi dilimi ve net maaş',
+            basliklar: ['Ay', 'Kümülatif matrah', 'Dilim', 'Gelir vergisi', 'Net maaş', 'Önceki aya göre'],
+            satirlar: b.rows.map(function(x, i){ return [aylar[x.ay-1], x.kum, '%' + Math.round(x.oran * 100), x.gv, x.net, i === 0 ? '—' : x.net - b.rows[i-1].net]; })},
+    notlar: ['Gelir vergisi matrahı: ' + NH.fmt(b.gvM) + ' ₺/ay (brüt − SGK − işsizlik). ' + (atlama.length ? 'Dilim değişimi: ' + atlama.join(', ') + '; bu aylarda net maaş düşer.' : 'Kümülatif matrah yıl boyunca ilk dilimde kalır.'),
              'Asgari ücret istisnası uygulanmıştır (2026 brüt asgari ücret ' + NH.fmt(O.asgari_ucret.brut) + ' ₺). SGK tavanı ' + NH.fmt(O.sgk.tavan) + ' ₺.',
              'Engelli indirimi, AGİ benzeri özel indirimler, BES ve özel sigorta kesintileri dahil değildir.']
   };

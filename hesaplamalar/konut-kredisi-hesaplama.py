@@ -32,7 +32,7 @@ function hesapla(g, O){
   var rows = [], kalan = kredi, gK = [], gO = [], gEt = [], odenen = 0;
   for (var i = 1; i <= n; i++) { var f = kalan * r, a = taksit - f; kalan -= a; odenen += a;
     gK.push(Math.max(0, kalan)); gO.push(odenen); gEt.push(i <= 12 ? i + '. ay' : Math.round(i/12) + '. yıl');
-    if (i <= 6 || i === n) rows.push([i, taksit, a, f, Math.max(0, kalan)]); else if (i === 7) rows.push(['…','','','','']); }
+    rows.push([String(i), taksit, a, f, Math.max(0, kalan)]); }
   return {
     sonuclar: [
       {etiket: 'Aylık taksit', deger: taksit, birim: '₺', vurgu: true},
@@ -46,7 +46,8 @@ function hesapla(g, O){
     ],
     grafik: {tur: 'cizgi', baslik: 'Kalan borç ve ödenen anapara', etiketler: gEt,
              seriler: [{ad: 'Kalan borç', veri: gK}, {ad: 'Ödenen anapara', veri: gO, renk: '#059669'}]},
-    tablo: {basliklar: ['Ay', 'Taksit', 'Anapara', 'Faiz', 'Kalan'], satirlar: rows},
+    pay: {baslik: 'Toplam geri ödemenin dağılımı', birim: '₺', parcalar: [{ad: 'Anapara', deger: kredi}, {ad: 'Faiz', deger: faiz, renk: '#dc2626'}]},
+    tablo: {baslik: 'Ödeme planı (' + n + ' ay)', basliklar: ['Ay', 'Taksit', 'Anapara', 'Faiz', 'Kalan borç'], satirlar: rows},
     notlar: ['Konut kredilerinde KKDF ve BSMV alınmaz. Ekspertiz, ipotek tesis ücreti, DASK ve konut sigortası dahil değildir.',
              'Peşinat: BDDK düzenlemelerine göre kredi tutarı, konut değerinin belirli bir oranını (genellikle %75-90, değere göre kademeli) aşamaz; bankanız kesin oranı bildirir.']
   };

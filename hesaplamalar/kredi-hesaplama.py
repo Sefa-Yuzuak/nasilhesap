@@ -33,8 +33,7 @@ function hesapla(g){
   for (var i = 1; i <= n; i++) {
     var f = kalan * r, ana = taksit - f; kalan -= ana;
     gAna.push(ana); gFaiz.push(f); gKalan.push(Math.max(0, kalan)); gEt.push(i + '. ay');
-    if (i <= 12 || i === n) rows.push([i, taksit, ana, f, Math.max(0, kalan)]);
-    else if (i === 13) rows.push(['…', '', '', '', '']);
+    rows.push([String(i), taksit, ana, f, Math.max(0, kalan)]);
   }
   var yillik = (Math.pow(1 + r, 12) - 1) * 100;
   return {
@@ -48,7 +47,8 @@ function hesapla(g){
     ],
     grafik: {tur: 'cizgi', baslik: 'Taksitin dağılımı: anapara artar, faiz azalır', etiketler: gEt,
              seriler: [{ad: 'Anapara', veri: gAna}, {ad: 'Faiz + vergi', veri: gFaiz, renk: '#dc2626'}, {ad: 'Kalan borç', veri: gKalan, renk: '#9ca3af'}]},
-    tablo: {basliklar: ['Ay', 'Taksit', 'Anapara', 'Faiz+vergi', 'Kalan'], satirlar: rows},
+    pay: {baslik: 'Toplam geri ödemenin dağılımı', birim: '₺', parcalar: [{ad: 'Anapara', deger: g.tutar}, {ad: 'Faiz', deger: faizNet, renk: '#dc2626'}, {ad: 'KKDF + BSMV', deger: vergiTop, renk: '#d97706'}]},
+    tablo: {baslik: 'Ödeme planı (' + n + ' ay)', basliklar: ['Ay', 'Taksit', 'Anapara', 'Faiz+vergi', 'Kalan borç'], satirlar: rows},
     notlar: ['Dosya masrafı, hayat sigortası ve ekspertiz gibi ek ücretler dahil değildir; banka teklifinde "toplam maliyet oranı"nı karşılaştırın.']
   };
 }

@@ -46,8 +46,14 @@
         <button type="button" class="dugme ikincil" id="sifirla-btn">Sıfırla</button>
       </div>
     </form>
-    <div id="sonuc" class="sonuc" aria-live="polite">
-      <p class="soluk">Değerleri girin, sonuç anında görünür.</p>
+    <div id="sonuc" class="sonuc">
+      <div id="sonuc-ic" aria-live="polite"><p class="soluk">Değerleri girin, sonuç anında görünür.</p></div>
+      <div class="sonuc-eylem">
+        <button type="button" class="mini" id="kopyala-btn">Sonucu kopyala</button>
+        <button type="button" class="mini" id="paylas-btn" data-paylas>Sonucu paylaş</button>
+        <button type="button" class="mini" id="yazdir-btn">Yazdır</button>
+        <span id="eylem-not" class="soluk kucuk" role="status"></span>
+      </div>
     </div>
   </section>
 
@@ -97,7 +103,7 @@
   </section>
   {% endif %}
 
-  <section class="icerik-bolum">
+  <section class="icerik-bolum sss-bolum">
     <h2>Sık sorulan sorular</h2>
     {% for s in h.sss %}
     <details class="sss"><summary>{{ s.soru }}</summary><p>{{ s.cevap }}</p></details>
@@ -111,7 +117,7 @@
   </section>
   {% endif %}
 
-  <section class="icerik-bolum">
+  <section class="icerik-bolum diger-bolum">
     <h2>{{ h.kat.ad }} kategorisindeki diğer hesaplamalar</h2>
     <div class="etiketler sol">
       {% for i in h.kat.hesaplar if i.slug != h.slug %}<a class="etiket" href="{{ i.url }}">{{ i.baslik }}</a>{% endfor %}

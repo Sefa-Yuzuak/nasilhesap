@@ -109,6 +109,14 @@ p{margin:.4em 0 1em}
 .grafik .gx{font-size:11px;fill:var(--soluk)}
 .lejant{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--soluk);margin-top:4px}
 .lej i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.pay-kap{margin:14px 0 6px}
+.pay-kap figcaption{font-size:.9rem;font-weight:600;margin-bottom:6px}
+.pay{display:block;border-radius:8px;overflow:hidden;background:var(--cizgi)}
+.pay .py{font-size:11px;font-weight:700;fill:#fff}
+.tablo-bas{font-size:.9rem;font-weight:600;margin:14px 0 4px}
+/* uzun ödeme planı (360 aya kadar) sayfayı uzatmasın: sonuç tablosu kendi içinde kayar */
+.sonuc .tablo-kap{max-height:min(60vh,520px);overflow-y:auto}
+.sonuc thead th{position:sticky;top:0;z-index:1}
 .sonuc-eylem{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--cizgi)}
 .mini{background:#fff;border:1px solid var(--cizgi);border-radius:8px;padding:6px 12px;font:inherit;font-size:.88rem;cursor:pointer;color:var(--metin)}
 .mini:hover{border-color:var(--vurgu);color:var(--vurgu)}
@@ -189,3 +197,21 @@ th{background:var(--zemin);font-size:.9rem}
 .alt nav{display:flex;flex-direction:column;gap:6px}.alt nav a{color:var(--metin)}
 .alt-not{color:var(--soluk);font-size:.85rem;margin-top:20px;border-top:1px solid var(--cizgi);padding-top:14px}
 @media(max-width:700px){.alt-ust{grid-template-columns:1fr}}
+
+/* yazdırma: üst bar, menü, alt bilgi, reklam ve düğmeler gizli; girdiler, sonuç, tablo ve formül görünür */
+@media print{
+  @page{margin:14mm}
+  body{background:#fff;color:#000;font-size:12px}
+  body.mini-acik{padding-bottom:0}
+  .ust,.alt,.atla,.kirinti,.senaryolar,.sonraki,.son-araclar,.mini-sonuc,.dugmeler,.sonuc-eylem,.sss-bolum,.diger-bolum,ins.adsbygoogle{display:none!important}
+  .kap{max-width:none;padding:0}
+  .kart,.icerik-bolum,.sonuc{box-shadow:none;border-color:#bbb}
+  .hesaplayici{display:block;padding:12px;margin:8px 0 14px}
+  #hesap-form{grid-template-columns:repeat(3,1fr);gap:6px 14px;margin-bottom:12px}
+  .girdi input,.alan select,.alan input[type=date]{padding:4px 8px;font-size:12px;min-height:0;border-color:#bbb}
+  .sonuc-ana,.kisa-cevap{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sonuc .tablo-kap{max-height:none;overflow:visible}
+  .sonuc thead th{position:static}
+  tr,.grafik-kap,.pay-kap,.ornek{break-inside:avoid}
+  a{color:inherit}
+}
